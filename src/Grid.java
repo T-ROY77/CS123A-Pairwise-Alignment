@@ -175,14 +175,11 @@ public class Grid {
                     //check nucleotide column for match/mismatch
                     //make method to calc match/mismatch score?
                     //use matrices?
-                    //
-                    //getMatchScore()
-                    if(cells[0][j].nucleotide == cells[i][0].nucleotide){
-                        nw = cells[i-1][j-1].score+1;
-                    }
-                    else{
-                        nw = cells[i-1][j-1].score-1;
-                    }
+
+                    char[] match = new char[2];
+                    match[0] = cells[0][j].nucleotide;
+                    match[1] = cells[i][0].nucleotide;
+                    nw = cells[i-1][j-1].score + getMatchScore(match);
 
                     //get max score from all three values
                     highest = Math.max(north, west);
