@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +16,8 @@ public class Main {
             System.out.println("2: Print grid");
             System.out.println("3: Print arrow grid");
             System.out.println("4: Enter new query sequences");
-            System.out.println("5: quit");
+            System.out.println("5: Enter new query sequences with filepath");
+            System.out.println("6: quit");
             System.out.println("Sequence 1: " + seq1);
             System.out.println("Sequence 2: " + seq2);
             String choice = input.nextLine();
@@ -50,6 +53,27 @@ public class Main {
                     System.out.println("\n");
                 }
                 else if(inputNumber == 5){
+
+                    System.out.println("Enter filepath: ");
+                    String filepath = input.nextLine();
+                    try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
+                        String firstInput = read.readLine();
+                        seq1 = firstInput;
+                        String secondInput = read.readLine();
+                        seq2 = secondInput;
+
+                        //create the new grid
+                        char[] seq1Array = seq1.toCharArray();
+                        char[] seq2Array = seq2.toCharArray();
+                        grid = new Grid(seq1Array, seq2Array);
+                        System.out.println("\n");
+                    }
+                    catch(Exception e){
+                        System.out.println("Error reading filepath");
+
+                    }
+                }
+                else if(inputNumber == 6){
                     break;
                 }
                 else {
