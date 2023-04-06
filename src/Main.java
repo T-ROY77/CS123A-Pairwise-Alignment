@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Grid grid = new Grid();
+        BLOSUMGrid grid = new BLOSUMGrid();
         Scanner input = new Scanner(System.in);
         String seq1 = "";
         String seq2 = "";
@@ -55,7 +55,7 @@ public class Main {
                         seq2 = secondInput.toLowerCase();
                         char[] seq1Array = seq1.toCharArray();
                         char[] seq2Array = seq2.toCharArray();
-                        grid = new Grid(seq1Array, seq2Array);
+                        grid = new BLOSUMGrid(seq1Array, seq2Array);
                         System.out.println("\n");
                         System.out.println("Sequences saved");
                         System.out.println("\n");
@@ -79,7 +79,7 @@ public class Main {
                             seq2 = secondInput;
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
-                            grid = new Grid(seq1Array, seq2Array);
+                            grid = new BLOSUMGrid(seq1Array, seq2Array);
                             System.out.println("\n");
                             System.out.println("Sequences saved");
                             System.out.println("\n");
