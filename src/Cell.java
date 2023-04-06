@@ -3,7 +3,7 @@
 //@class Cell
 //
 //represents a single cell in a pairwise algorithm grid
-//dcdc
+//
 public class Cell {
     public int score;
     public char nucleotide = ' ';

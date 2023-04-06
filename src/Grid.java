@@ -9,7 +9,7 @@
 
 public class Grid {
 
-    //class variablesdcdc
+    //class variables
     //
     public Cell[][] cells;
     public int gridLength;
