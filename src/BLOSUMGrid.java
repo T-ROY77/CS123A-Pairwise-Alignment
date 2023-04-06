@@ -5,8 +5,6 @@ import java.util.TreeMap;
 
 public class BLOSUMGrid extends Grid{
     public Map<String, Integer> BLOSUM;
-
-
     public BLOSUMGrid(char[] seq1, char[] seq2){
         //need to error check that all chars are on matrix
 
@@ -17,14 +15,13 @@ public class BLOSUMGrid extends Grid{
 
     public BLOSUMGrid(){};
     public int getMatchScore(String match) throws Exception {
-        //get only works when string is in correct order
-//        if(BLOSUM.containsKey(match)){
-//            return BLOSUM.get(match);
-//        }
-//        else{
-//            throw new Exception("Key not found in Matrix");
-//        }
-        //if(!BLOSUM.containsKey(match))
+        //check if the string is backwards
+        if(!BLOSUM.containsKey(match)){
+            match = "" + match.charAt(1) + match.charAt(0);
+            if(!BLOSUM.containsKey(match)){
+                throw new Exception("Key not found in Matrix");
+            }
+        }
         int score = BLOSUM.get(match);
         System.out.println(score);
         return score;
