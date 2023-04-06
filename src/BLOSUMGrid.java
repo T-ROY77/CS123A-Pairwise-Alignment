@@ -5,6 +5,8 @@ import java.util.TreeMap;
 
 public class BLOSUMGrid extends Grid{
     public Map<String, Integer> BLOSUM;
+    public final char[] aminoAcids = {'c', 's', 't', 'p', 'a', 'g', 'n', 'd', 'e', 'q', 'h', 'r', 'k', 'm', 'i', 'l', 'v', 'f', 'y', 'w'};
+
     public BLOSUMGrid(char[] seq1, char[] seq2){
         //need to error check that all chars are on matrix
 
@@ -28,20 +30,7 @@ public class BLOSUMGrid extends Grid{
     }
 
     public void setUpMatrix() {
-        System.out.println("test map");
-//        char[] match = new char[2];
-//        match[0] = 'a';
-//        match[1] = 'b';
-//        BLOSUM = new HashMap<char[], Integer>();
-//        BLOSUM.put(match, new Integer(2));
-
-
-
-        //enter scores from top left going down
-        //loop through nucleotides 'cc', 'cs', 'ct', 'cp'
-        //after one loop, start one more index later(skip c)
-
-        char[] nucleotides = new char[]{'c', 's', 't', 'p', 'a', 'g', 'n', 'd', 'e', 'q', 'h', 'r', 'k', 'm', 'i', 'l', 'v', 'f', 'y', 'w'};
+             char[] nucleotides = new char[]{'c', 's', 't', 'p', 'a', 'g', 'n', 'd', 'e', 'q', 'h', 'r', 'k', 'm', 'i', 'l', 'v', 'f', 'y', 'w'};
         int[] scores = new int[211];
         for(int i = 0; i < 211; i++){
             scores[i] = i;
