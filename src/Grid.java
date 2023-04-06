@@ -76,7 +76,7 @@ public class Grid {
     public void setUpMatrix() {
     }
 
-    public int getMatchScore(char[] match){
+    public int getMatchScore(char[] match) throws Exception {
         if(match[0] == match[1]){
             return 1;
         }

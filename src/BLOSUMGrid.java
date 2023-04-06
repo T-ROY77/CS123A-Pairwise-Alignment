@@ -1,9 +1,18 @@
 import java.util.HashMap;
 
 public class BLOSUMGrid extends Grid{
+
+    //need to error check that all chars are on matrix
+    //in constructor?
+
     @Override
-    public int getMatchScore(char[] match) {
-        return BLOSUM.get(match);
+    public int getMatchScore(char[] match) throws Exception {
+        if(BLOSUM.containsKey(match)){
+            return BLOSUM.get(match);
+        }
+        else{
+            throw new Exception("Key not found in Matrix");
+        }
     }
 
     public void setUpMatrix() {
@@ -13,6 +22,5 @@ public class BLOSUMGrid extends Grid{
         match[1] = 'b';
         BLOSUM = new HashMap<char[], Integer>();
         BLOSUM.put(match, new Integer(2));
-        System.out.println(BLOSUM.get(match));
     }
 }
