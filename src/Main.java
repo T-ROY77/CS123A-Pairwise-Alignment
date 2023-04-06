@@ -12,7 +12,7 @@ public class Main {
 //
 //        System.out.println(seq1);
         //take ui
-        //
+        //dcdc
 
         String sequence1 = "hytdcdcdchtttk";
         String sequence2 = "ioacddtfdsfsttp";
