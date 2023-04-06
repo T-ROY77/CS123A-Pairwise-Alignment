@@ -17,7 +17,7 @@ public class Main {
             System.out.println("3: Print arrow grid");
             System.out.println("4: Enter new query sequences");
             System.out.println("5: Enter new query sequences with filepath");
-            System.out.println("6: quit");
+            System.out.println("9: quit");
             System.out.println("Sequence 1: " + seq1);
             System.out.println("Sequence 2: " + seq2);
             String choice = input.nextLine();
@@ -73,7 +73,7 @@ public class Main {
 
                     }
                 }
-                else if(inputNumber == 6){
+                else if(inputNumber == 9){
                     break;
                 }
                 else {
