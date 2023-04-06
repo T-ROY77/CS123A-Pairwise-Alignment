@@ -7,7 +7,14 @@
 //uses a 2d array of Cells to represent grid
 //
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Grid {
+
+
+    public HashMap<char[], Integer> BLOSUM;
+
 
     //class variables
     //
@@ -58,10 +65,25 @@ public class Grid {
             for (int j = 0; j < gridLength; j++)
                 cells[i][j] = new Cell();
         }
+
+        //initialize BLOSUM matrix
+        setUpMatrix();
     }
 
     public Grid(){}
 
+
+    public void setUpMatrix() {
+    }
+
+    public int getMatchScore(char[] match){
+        if(match[0] == match[1]){
+            return 1;
+        }
+        else{
+            return -1;
+        }
+    }
 
     //@method setUpGrid
     //
@@ -147,9 +169,14 @@ public class Grid {
                     //calculate all three values(North, West, and NW cell)
                     north = cells[i-1][j].score - INDELPENALTY;
                     west = cells[i][j-1].score - INDELPENALTY;
+
+
+
                     //check nucleotide column for match/mismatch
                     //make method to calc match/mismatch score?
                     //use matrices?
+                    //
+                    //getMatchScore()
                     if(cells[0][j].nucleotide == cells[i][0].nucleotide){
                         nw = cells[i-1][j-1].score+1;
                     }
