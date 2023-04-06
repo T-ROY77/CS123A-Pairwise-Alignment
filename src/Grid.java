@@ -60,6 +60,9 @@ public class Grid {
         }
     }
 
+    public Grid(){}
+
+
     //@method setUpGrid
     //
     //adds the query sequences to the grid
