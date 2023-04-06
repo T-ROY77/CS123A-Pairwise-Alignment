@@ -3,16 +3,18 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-//        Scanner input = new Scanner(System.in);
-//
-//        System.out.println("Input sequence 1: ");
-//        String seq1 = input.nextLine();
-//        System.out.println("Input sequence 2: ");
-//        String seq2 = input.nextLine();
-//
-//        System.out.println(seq1);
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Input sequence 1: ");
+        String seq1 = input.nextLine();
+        System.out.println("Input sequence 2: ");
+        String seq2 = input.nextLine();
+
+        System.out.println(seq1);
+        System.out.println(seq2);
+
         //take ui
-        //
+        //c
 
         String sequence1 = "hytdcdcdchtttk";
         String sequence2 = "ioacddtfdsfsttp";
