@@ -41,16 +41,24 @@ public class Main {
                     //take UI
                     System.out.print("Enter the first sequence: ");
                     String firstInput = input.nextLine();
-                    seq1 = firstInput;
                     System.out.print("Enter the second sequence: ");
                     String secondInput = input.nextLine();
-                    seq2 = secondInput;
 
-                    //create the new grid
-                    char[] seq1Array = seq1.toCharArray();
-                    char[] seq2Array = seq2.toCharArray();
-                    grid = new Grid(seq1Array, seq2Array);
-                    System.out.println("\n");
+                    //check that sequence is only letters
+                    if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
+                        System.out.println("Invalid sequence");
+                    }
+                    else {
+                        //create the new grid
+                        seq1 = firstInput.toLowerCase();
+                        seq2 = secondInput.toLowerCase();
+                        char[] seq1Array = seq1.toCharArray();
+                        char[] seq2Array = seq2.toCharArray();
+                        grid = new Grid(seq1Array, seq2Array);
+                        System.out.println("\n");
+                        System.out.println("Sequences saved");
+                        System.out.println("\n");
+                    }
                 }
                 else if(inputNumber == 5){
 
@@ -58,17 +66,26 @@ public class Main {
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
                         String firstInput = read.readLine();
-                        seq1 = firstInput;
                         String secondInput = read.readLine();
-                        seq2 = secondInput;
-
-                        //create the new grid
-                        char[] seq1Array = seq1.toCharArray();
-                        char[] seq2Array = seq2.toCharArray();
-                        grid = new Grid(seq1Array, seq2Array);
-                        System.out.println("\n");
+                        if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
+                            System.out.println("\n");
+                            System.out.println("Invalid sequence");
+                            System.out.println("\n");
+                        }
+                        else {
+                            //create the new grid
+                            seq1 = firstInput;
+                            seq2 = secondInput;
+                            char[] seq1Array = seq1.toCharArray();
+                            char[] seq2Array = seq2.toCharArray();
+                            grid = new Grid(seq1Array, seq2Array);
+                            System.out.println("\n");
+                            System.out.println("Sequences saved");
+                            System.out.println("\n");
+                        }
                     }
                     catch(Exception e){
+                        System.out.println("\n");
                         System.out.println("Error reading filepath");
 
                     }
@@ -77,9 +94,11 @@ public class Main {
                     break;
                 }
                 else {
+                    System.out.println("\n");
                     System.out.println("Invalid input.");
                 }
             } catch (NumberFormatException e) {
+                System.out.println("\n");
                 System.out.println("Invalid input. Please enter a number.");
             }
         }
