@@ -75,8 +75,8 @@ public class Grid {
     public void setUpMatrix() {
     }
 
-    public int getMatchScore(char[] match) throws Exception {
-        if(match[0] == match[1]){
+    public int getMatchScore(String match) throws Exception {
+        if(match.charAt(0) == match.charAt(1)){
             return 1;
         }
         else{
@@ -178,7 +178,8 @@ public class Grid {
                     char[] match = new char[2];
                     match[0] = cells[0][j].nucleotide;
                     match[1] = cells[i][0].nucleotide;
-                    nw = cells[i-1][j-1].score + getMatchScore(match);
+                    String s = "" + cells[0][j].nucleotide + cells[i][0].nucleotide;
+                    nw = cells[i-1][j-1].score + getMatchScore(s);
 
                     //get max score from all three values
                     highest = Math.max(north, west);

@@ -4,7 +4,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class BLOSUMGrid extends Grid{
-    public Map<char[], Integer> BLOSUM;
+    public Map<String, Integer> BLOSUM;
 
 
     public BLOSUMGrid(char[] seq1, char[] seq2){
@@ -16,18 +16,18 @@ public class BLOSUMGrid extends Grid{
     }
 
     public BLOSUMGrid(){};
-    @Override
-    public int getMatchScore(char[] match) throws Exception {
+    public int getMatchScore(String match) throws Exception {
+        //get only works when string is in correct order
 //        if(BLOSUM.containsKey(match)){
 //            return BLOSUM.get(match);
 //        }
 //        else{
 //            throw new Exception("Key not found in Matrix");
 //        }
+        //if(!BLOSUM.containsKey(match))
         int score = BLOSUM.get(match);
-        score = score +1;
+        System.out.println(score);
         return score;
-
     }
 
     public void setUpMatrix() {
@@ -49,7 +49,7 @@ public class BLOSUMGrid extends Grid{
         for(int i = 0; i < 211; i++){
             scores[i] = i;
         }
-        BLOSUM = new HashMap<char[], Integer>();
+        BLOSUM = new HashMap<String, Integer>();
 
         int start = 0;
         int scoreIndex = 0;
@@ -58,7 +58,8 @@ public class BLOSUMGrid extends Grid{
                 char[] match = new char[2];
                 match[0] = nucleotides[i];
                 match[1] = nucleotides[j];
-                BLOSUM.put(match, new Integer(scores[scoreIndex]));
+                String s = "" + nucleotides[i] + nucleotides[j];
+                BLOSUM.put(s, new Integer(scores[scoreIndex]));
                 scoreIndex++;
             }
             start++;
@@ -66,11 +67,11 @@ public class BLOSUMGrid extends Grid{
         System.out.println("number of scores: " + scoreIndex);
 
 
-        for (char[] variableName : BLOSUM.keySet())
+        for (String variableName : BLOSUM.keySet())
         {
-            char[] variableKey = variableName;
+            String variableKey = variableName;
             Integer variableValue = BLOSUM.get(variableName);
-            System.out.println(" " + variableKey[0] + variableKey[1] + " = " + variableValue);
+            System.out.println(" " + variableKey + " = " + variableValue);
         }
     }
 }
