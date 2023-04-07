@@ -11,6 +11,9 @@ public class Main {
         Scanner input = new Scanner(System.in);
         String seq1 = "";
         String seq2 = "";
+        String seq1Name = "";
+        String seq2Name = "";
+
         String mode = "nucleotide";
 
         while (true) {
@@ -27,9 +30,13 @@ public class Main {
                 System.out.println("Sequence 1: (Enter sequence)");
                 System.out.println("Sequence 2: (Enter sequence)");
             }
-            else{
+            else if(seq1Name.equals("") || seq2Name.equals("")){
                 System.out.println("Sequence 1: " + seq1);
                 System.out.println("Sequence 2: " + seq2);
+            }
+            else{
+                System.out.println(" " + seq1Name + " " + seq1);
+                System.out.println(" " + seq2Name + " " + seq2);
             }
             String choice = input.nextLine();
 
@@ -77,6 +84,8 @@ public class Main {
                     System.out.println("mode changed");
                     seq1 = "";
                     seq2 = "";
+                    seq1Name = "";
+                    seq2Name = "";
                 }
                 else if (inputNumber == 1) {
                     //take UI
@@ -105,6 +114,8 @@ public class Main {
                         System.out.println("\n");
                         System.out.println("Sequences saved");
                         System.out.println("\n");
+                        seq1Name = "";
+                        seq2Name = "";
                     }
                 }
                 else if(inputNumber == 2){
@@ -112,7 +123,9 @@ public class Main {
                     System.out.println("Enter filepath: ");
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
+                        seq1Name = read.readLine();
                         String firstInput = read.readLine();
+                        seq2Name = read.readLine();
                         String secondInput = read.readLine();
                         if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
                             System.out.println("\n");
@@ -132,6 +145,9 @@ public class Main {
                                 grid = new BLOSUMGrid(seq1Array, seq2Array);
                             }
                             System.out.println("\n");
+                            System.out.println(seq1Name);
+                            System.out.println(seq2Name);
+
                             System.out.println("Sequences saved");
                             System.out.println("\n");
                         }
