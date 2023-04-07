@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        //BLOSUMGrid proteinGrid = new BLOSUMGrid();
         BLOSUMGrid grid = new BLOSUMGrid();
 
         Scanner input = new Scanner(System.in);
@@ -50,6 +49,12 @@ public class Main {
                         System.out.println("Enter sequences first");
                     }
                     else {
+                        if(mode.equalsIgnoreCase("nucleotide")){
+                            grid.useMatrix = false;
+                        }
+                        else{
+                            grid.useMatrix = true;
+                        }
                         grid.findAlignment();
                         grid.printAlignment();
                         System.out.println("\nMax score:");
@@ -65,6 +70,7 @@ public class Main {
                         grid.printGrid();
                     }
                 }
+                //print current arrow grid
                 else if(inputNumber == 5) {
                     if(seq1.equals("") || seq2.equals("")){
                         System.out.println("Enter sequences first");
@@ -74,6 +80,7 @@ public class Main {
                     }
 
                 }
+                //change mode
                 else if(inputNumber == 6){
                     if(mode.equalsIgnoreCase("nucleotide")){
                         mode = "protein";
@@ -88,6 +95,7 @@ public class Main {
                     System.out.print("mode changed");
 
                 }
+                //ui
                 else if (inputNumber == 1) {
                     //take UI
                     System.out.print("Enter the first sequence: ");
@@ -95,8 +103,11 @@ public class Main {
                     System.out.print("Enter the second sequence: ");
                     String secondInput = input.nextLine();
 
-                    //check that sequence is only letters
-                    if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
+                    firstInput = firstInput.toLowerCase();
+                    secondInput = secondInput.toLowerCase();
+
+                    //check that sequence is only letters excluding o u and j (no amino acid)
+                    if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
                         System.out.println("Invalid sequence");
                     }
                     else {
@@ -105,13 +116,8 @@ public class Main {
                         seq2 = secondInput.toLowerCase();
                         char[] seq1Array = seq1.toCharArray();
                         char[] seq2Array = seq2.toCharArray();
+                        grid = new BLOSUMGrid(seq1Array, seq2Array);
 
-                        if(mode.equalsIgnoreCase("nucleotide")){
-                            //grid = new Grid(seq1Array, seq2Array);
-                        }
-                        else{
-                            grid = new BLOSUMGrid(seq1Array, seq2Array);
-                        }
                         seq1Name = "";
                         seq2Name = "";
                         System.out.println("\n");
@@ -119,8 +125,8 @@ public class Main {
 
                     }
                 }
+                //file path input
                 else if(inputNumber == 2){
-
                     System.out.println("Enter filepath: ");
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
@@ -128,8 +134,12 @@ public class Main {
                         String firstInput = read.readLine();
                         seq2Name = read.readLine();
                         String secondInput = read.readLine();
-                        if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
-                            System.out.println("\n");
+
+                        firstInput = firstInput.toLowerCase();
+                        secondInput = secondInput.toLowerCase();
+
+                        //check that sequence is only letters excluding o u and j (no amino acid)
+                        if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
                             System.out.println("Invalid sequence");
                         }
                         else {
@@ -138,12 +148,8 @@ public class Main {
                             seq2 = secondInput;
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
-                            if(mode.equalsIgnoreCase("nucleotide")){
-                                //grid = new Grid(seq1Array, seq2Array);
-                            }
-                            else{
-                                grid = new BLOSUMGrid(seq1Array, seq2Array);
-                            }
+                            grid = new BLOSUMGrid(seq1Array, seq2Array);
+
                             System.out.println("\n");
                             System.out.println(seq1Name);
                             System.out.println(seq2Name);

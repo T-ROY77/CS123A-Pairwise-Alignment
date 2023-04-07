@@ -16,7 +16,9 @@ public class BLOSUMGrid extends Grid{
 
     public BLOSUMGrid(){};
 
-    public int getMatchScore(String match) throws Exception {
+    //gets the score from the matrix
+    //Uses BLOSUM62
+    public int getMatrixScore(String match) throws Exception{
         //check if the string is backwards
         if(!BLOSUM.containsKey(match)){
             match = "" + match.charAt(1) + match.charAt(0);
@@ -25,8 +27,17 @@ public class BLOSUMGrid extends Grid{
             }
         }
         int score = BLOSUM.get(match);
-        System.out.println(score);
         return score;
+    }
+
+    @Override
+    public int getMatchScore(String match) throws Exception {
+        if(this.useMatrix){
+            return getMatrixScore(match);
+        }
+        else{
+            return super.getMatchScore(match);
+        }
     }
 
     public void setUpMatrix() throws Exception {

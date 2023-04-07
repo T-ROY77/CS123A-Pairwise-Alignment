@@ -25,6 +25,8 @@ public class Grid {
     public char[] alignedSequence1;
     public char[] alignedSequence2;
     public int maxScore;
+    public boolean useMatrix;
+
 
     //constants
     //
@@ -64,7 +66,7 @@ public class Grid {
             for (int j = 0; j < gridLength; j++)
                 cells[i][j] = new Cell();
         }
-
+        useMatrix = false;
         //initialize matrix
         //setUpMatrix();
     }
@@ -169,11 +171,6 @@ public class Grid {
                     north = cells[i-1][j].score - INDELPENALTY;
                     west = cells[i][j-1].score - INDELPENALTY;
 
-
-
-                    //check nucleotide column for match/mismatch
-                    //make method to calc match/mismatch score?
-                    //use matrices?
 
                     char[] match = new char[2];
                     match[0] = cells[0][j].nucleotide;
