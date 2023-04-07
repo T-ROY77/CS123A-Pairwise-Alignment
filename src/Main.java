@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
         //BLOSUMGrid proteinGrid = new BLOSUMGrid();
-        Grid grid = new Grid();
+        BLOSUMGrid grid = new BLOSUMGrid();
 
         Scanner input = new Scanner(System.in);
         String seq1 = "";
@@ -81,11 +81,12 @@ public class Main {
                     else{
                         mode = "nucleotide";
                     }
-                    System.out.println("mode changed");
                     seq1 = "";
                     seq2 = "";
                     seq1Name = "";
                     seq2Name = "";
+                    System.out.print("mode changed");
+
                 }
                 else if (inputNumber == 1) {
                     //take UI
@@ -106,16 +107,16 @@ public class Main {
                         char[] seq2Array = seq2.toCharArray();
 
                         if(mode.equalsIgnoreCase("nucleotide")){
-                            grid = new Grid(seq1Array, seq2Array);
+                            //grid = new Grid(seq1Array, seq2Array);
                         }
                         else{
                             grid = new BLOSUMGrid(seq1Array, seq2Array);
                         }
-                        System.out.println("\n");
-                        System.out.println("Sequences saved");
-                        System.out.println("\n");
                         seq1Name = "";
                         seq2Name = "";
+                        System.out.println("\n");
+                        System.out.println("Sequences saved");
+
                     }
                 }
                 else if(inputNumber == 2){
@@ -130,7 +131,6 @@ public class Main {
                         if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
                             System.out.println("\n");
                             System.out.println("Invalid sequence");
-                            System.out.println("\n");
                         }
                         else {
                             //create the new grid
@@ -139,7 +139,7 @@ public class Main {
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
                             if(mode.equalsIgnoreCase("nucleotide")){
-                                grid = new Grid(seq1Array, seq2Array);
+                                //grid = new Grid(seq1Array, seq2Array);
                             }
                             else{
                                 grid = new BLOSUMGrid(seq1Array, seq2Array);
@@ -147,9 +147,7 @@ public class Main {
                             System.out.println("\n");
                             System.out.println(seq1Name);
                             System.out.println(seq2Name);
-
                             System.out.println("Sequences saved");
-                            System.out.println("\n");
                         }
                     }
                     catch(Exception e){

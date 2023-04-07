@@ -65,14 +65,14 @@ public class Grid {
                 cells[i][j] = new Cell();
         }
 
-        //initialize BLOSUM matrix
-        setUpMatrix();
+        //initialize matrix
+        //setUpMatrix();
     }
 
     public Grid(){}
 
 
-    public void setUpMatrix() {
+    public void setUpMatrix() throws Exception {
     }
 
     public int getMatchScore(String match) throws Exception {
