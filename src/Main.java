@@ -1,51 +1,113 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Grid grid = new Grid();
+        BLOSUMGrid grid = new BLOSUMGrid();
+
         Scanner input = new Scanner(System.in);
         String seq1 = "";
         String seq2 = "";
+        String seq1Name = "";
+        String seq2Name = "";
+
+        String mode = "nucleotide";
 
         while (true) {
 
             System.out.println("\n");
-            System.out.println("1: Calculate an Optimal Alignment");
-            System.out.println("2: Print grid");
-            System.out.println("3: Print arrow grid");
-            System.out.println("4: Enter new query sequences");
-            System.out.println("5: Enter new query sequences with filepath");
+            System.out.println("1: Enter new query sequences");
+            System.out.println("2: Enter new query sequences with filepath");
+            System.out.println("3: Calculate an Optimal Alignment");
+            System.out.println("4: Print grid");
+            System.out.println("5: Print arrow grid");
+            System.out.println("6: Change mode (" + mode + " mode)");
             System.out.println("9: quit");
-            System.out.println("Sequence 1: " + seq1);
-            System.out.println("Sequence 2: " + seq2);
+            if(seq1.equals("") || seq2.equals("")){
+                System.out.println("Sequence 1: (Enter sequence)");
+                System.out.println("Sequence 2: (Enter sequence)");
+            }
+            else if(seq1Name.equals("") || seq2Name.equals("")){
+                System.out.println("Sequence 1: " + seq1);
+                System.out.println("Sequence 2: " + seq2);
+            }
+            else{
+                System.out.println(" " + seq1Name + " " + seq1);
+                System.out.println(" " + seq2Name + " " + seq2);
+            }
             String choice = input.nextLine();
 
             try {
                 int inputNumber = Integer.parseInt(choice);
-                if (inputNumber == 1) {
-                    grid.findAlignment();
-                    grid.printAlignment();
-                    System.out.println("\nMax score:");
-                    System.out.println(grid.getMaxScore());
+                //calc alignment
+                //print optimal alignment
+                //print max score
+                if (inputNumber == 3) {
+                    if(seq1.equals("") || seq2.equals("")){
+                        System.out.println("Enter sequences first");
+                    }
+                    else {
+                        if(mode.equalsIgnoreCase("nucleotide")){
+                            grid.useMatrix = false;
+                        }
+                        else{
+                            grid.useMatrix = true;
+                        }
+                        grid.findAlignment();
+                        grid.printAlignment();
+                        System.out.println("\nMax score:");
+                        System.out.println(grid.getMaxScore());
+                    }
                 }
-                else if(inputNumber == 2){
-                    grid.printGrid();
+                //print current grid
+                else if(inputNumber == 4){
+                    if(seq1.equals("") || seq2.equals("")){
+                        System.out.println("Enter sequences first");
+                    }
+                    else {
+                        grid.printGrid();
+                    }
                 }
-                else if(inputNumber == 3) {
-                    grid.printArrowGrid();
+                //print current arrow grid
+                else if(inputNumber == 5) {
+                    if(seq1.equals("") || seq2.equals("")){
+                        System.out.println("Enter sequences first");
+                    }
+                    else {
+                        grid.printArrowGrid();
+                    }
 
                 }
-                else if (inputNumber == 4) {
+                //change mode
+                else if(inputNumber == 6){
+                    if(mode.equalsIgnoreCase("nucleotide")){
+                        mode = "protein";
+                    }
+                    else{
+                        mode = "nucleotide";
+                    }
+                    seq1 = "";
+                    seq2 = "";
+                    seq1Name = "";
+                    seq2Name = "";
+                    System.out.print("mode changed");
+
+                }
+                //ui
+                else if (inputNumber == 1) {
                     //take UI
                     System.out.print("Enter the first sequence: ");
                     String firstInput = input.nextLine();
                     System.out.print("Enter the second sequence: ");
                     String secondInput = input.nextLine();
 
-                    //check that sequence is only letters
-                    if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
+                    firstInput = firstInput.toLowerCase();
+                    secondInput = secondInput.toLowerCase();
+
+                    //check that sequence is only letters excluding o u and j (no amino acid)
+                    if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
                         System.out.println("Invalid sequence");
                     }
                     else {
@@ -54,23 +116,31 @@ public class Main {
                         seq2 = secondInput.toLowerCase();
                         char[] seq1Array = seq1.toCharArray();
                         char[] seq2Array = seq2.toCharArray();
-                        grid = new Grid(seq1Array, seq2Array);
+                        grid = new BLOSUMGrid(seq1Array, seq2Array);
+
+                        seq1Name = "";
+                        seq2Name = "";
                         System.out.println("\n");
                         System.out.println("Sequences saved");
-                        System.out.println("\n");
+
                     }
                 }
-                else if(inputNumber == 5){
-
+                //file path input
+                else if(inputNumber == 2){
                     System.out.println("Enter filepath: ");
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
+                        seq1Name = read.readLine();
                         String firstInput = read.readLine();
+                        seq2Name = read.readLine();
                         String secondInput = read.readLine();
-                        if(!firstInput.matches("[a-zA-Z]+") || !secondInput.matches("[a-zA-Z]+")){
-                            System.out.println("\n");
+
+                        firstInput = firstInput.toLowerCase();
+                        secondInput = secondInput.toLowerCase();
+
+                        //check that sequence is only letters excluding o u and j (no amino acid)
+                        if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
                             System.out.println("Invalid sequence");
-                            System.out.println("\n");
                         }
                         else {
                             //create the new grid
@@ -78,10 +148,12 @@ public class Main {
                             seq2 = secondInput;
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
-                            grid = new Grid(seq1Array, seq2Array);
+                            grid = new BLOSUMGrid(seq1Array, seq2Array);
+
                             System.out.println("\n");
+                            System.out.println(seq1Name);
+                            System.out.println(seq2Name);
                             System.out.println("Sequences saved");
-                            System.out.println("\n");
                         }
                     }
                     catch(Exception e){

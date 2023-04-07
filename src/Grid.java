@@ -7,7 +7,13 @@
 //uses a 2d array of Cells to represent grid
 //
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Grid {
+
+
+
 
     //class variables
     //
@@ -19,6 +25,8 @@ public class Grid {
     public char[] alignedSequence1;
     public char[] alignedSequence2;
     public int maxScore;
+    public boolean useMatrix;
+
 
     //constants
     //
@@ -58,10 +66,25 @@ public class Grid {
             for (int j = 0; j < gridLength; j++)
                 cells[i][j] = new Cell();
         }
+        useMatrix = false;
+        //initialize matrix
+        //setUpMatrix();
     }
 
     public Grid(){}
 
+
+    public void setUpMatrix() throws Exception {
+    }
+
+    public int getMatchScore(String match) throws Exception {
+        if(match.charAt(0) == match.charAt(1)){
+            return 1;
+        }
+        else{
+            return -1;
+        }
+    }
 
     //@method setUpGrid
     //
@@ -147,15 +170,13 @@ public class Grid {
                     //calculate all three values(North, West, and NW cell)
                     north = cells[i-1][j].score - INDELPENALTY;
                     west = cells[i][j-1].score - INDELPENALTY;
-                    //check nucleotide column for match/mismatch
-                    //make method to calc match/mismatch score?
-                    //use matrices?
-                    if(cells[0][j].nucleotide == cells[i][0].nucleotide){
-                        nw = cells[i-1][j-1].score+1;
-                    }
-                    else{
-                        nw = cells[i-1][j-1].score-1;
-                    }
+
+
+                    char[] match = new char[2];
+                    match[0] = cells[0][j].nucleotide;
+                    match[1] = cells[i][0].nucleotide;
+                    String s = "" + cells[0][j].nucleotide + cells[i][0].nucleotide;
+                    nw = cells[i-1][j-1].score + getMatchScore(s);
 
                     //get max score from all three values
                     highest = Math.max(north, west);
