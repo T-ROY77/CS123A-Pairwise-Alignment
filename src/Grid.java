@@ -1,19 +1,17 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
 //@Author Troy Perez
 //
 //
 //@class Grid
 //
-//represents the grid used to calculate a pairwise alignment
+//represents the grid used in the Needleman Wunsch algorithm to calculate pairwise alignment
 //uses a 2d array of Cells to represent grid
 //
 
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class Grid {
-
-
-
 
     //class variables
     //
@@ -44,11 +42,7 @@ public class Grid {
 
 
     //@constructor
-    //@param querySequence1
-    //@param querySequence2
     //
-    //calculates height and length of grid
-    //initializes grid and cells
     public Grid(){
 
         maxScore = Integer.MIN_VALUE;
@@ -60,12 +54,6 @@ public class Grid {
 
     }
 
-    //public Grid(){}
-
-
-    //basic grid does not use a matrix
-    public void setUpNewMatrix() throws Exception {
-    }
 
     //@method getMatchScore
     //@param match the string to score
@@ -104,30 +92,18 @@ public class Grid {
                 cells[i][j] = new Cell();
         }
 
-//        //reset all cells
-//        for (int i = 0; i < gridHeight; i++) {
-//            for (int j = 0; j < gridLength; j++) {
-//                cells[i][j].isSet = false;
-//            }
-//        }
-
-
         //set the top three empty cells
         cells[0][0].isSet = true;
         cells[0][0].character = '/';
         cells[0][0].arrowDir = -1;
 
-
         cells[1][0].isSet = true;
         cells[1][0].character = '/';
         cells[1][0].arrowDir = -1;
 
-
         cells[0][1].isSet = true;
         cells[0][1].character = '/';
         cells[0][1].arrowDir = -1;
-
-
 
         //add sequences to grid
         //
@@ -136,14 +112,12 @@ public class Grid {
             cells[0][PADDING + i].character = querySequence1[i];
             cells[0][PADDING + i].isSet = true;
             cells[0][PADDING + i].arrowDir = -1;
-
         }
         //sequence2
         for(int i = 0; i < gridHeight - PADDING; i++){
             cells[PADDING + i][0].character = querySequence2[i];
             cells[PADDING + i][0].isSet = true;
             cells[PADDING + i][0].arrowDir = -1;
-
         }
 
 
@@ -168,8 +142,6 @@ public class Grid {
         cells[1][1].score = 0;
         cells[1][1].isSet = true;
         cells[1][1].character = ' ';
-
-
     }
 
     //@method calcGrid
@@ -266,6 +238,7 @@ public class Grid {
                         //move to the north cell
                         currentHeight = currentHeight - 1;
                     }
+
                     //arrow points west
                     else if (cells[currentHeight][currentLength].arrowDir == WEST) {
 
@@ -275,7 +248,9 @@ public class Grid {
                         alignedSequence1.add(querySequence1[currentLength - PADDING]);
                         //move to the west cell
                         currentLength = currentLength - 1;
-                    } else if (cells[currentHeight][currentLength].arrowDir == NORTHWEST) {
+                    }
+                    //arrow points north west
+                    else if (cells[currentHeight][currentLength].arrowDir == NORTHWEST) {
 
                         //add character to both sequences
                         alignedSequence1.add(querySequence1[currentLength - PADDING]);
@@ -333,6 +308,11 @@ public class Grid {
         sequence2Name = name2;
     }
 
+    //@method setSequences
+    //@param seq1
+    //@param seq2
+    //
+    //sets the sequences
     public void setSequences(String seq1, String seq2){
         querySequence1 = seq1.toCharArray();
         querySequence2 = seq2.toCharArray();

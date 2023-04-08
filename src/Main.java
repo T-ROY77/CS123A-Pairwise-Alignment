@@ -8,13 +8,15 @@ public class Main {
     public static Scanner input;
     public static String seq1 = "";
     public static String seq2 = "";
-
-
     public static boolean proteinMode;
 
-
-
-
+    //@method checkSeq
+    //@param seq1
+    //@param sed2
+    //@return sequences are valid
+    //
+    //returns true if sequences are valid for current mode
+    //return false otherwise
     public static boolean checkSeq(String seq1, String seq2){
         if(proteinMode){
             //all amino acids(all alphabet letters except o, u, and j)
@@ -29,15 +31,18 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        //initialize variables
         grid = new MatrixGrid();
         input = new Scanner(System.in);
         proteinMode = false;
         System.out.println("Pairwise Alignment Tool");
 
+        //ui loop
         while (true) {
 
             //print sequences
             System.out.println();
+            //sequences are empty
             if(seq1.equals("") || seq2.equals("")){
                 System.out.println("Sequence 1:");
                 System.out.println("(Enter sequence)");
@@ -46,6 +51,7 @@ public class Main {
                 System.out.println("Sequence 2:");
                 System.out.println("(Enter sequence)");
             }
+            //sequences have no name
             else if(grid.sequence1Name.equals("") || grid.sequence2Name.equals("")){
                 System.out.println("Sequence 1:");
                 System.out.println(seq1);
@@ -53,6 +59,7 @@ public class Main {
                 System.out.println("Sequence 2:");
                 System.out.println(seq2);
             }
+            //sequences have a name
             else{
                 System.out.println(" " + grid.sequence1Name);
                 System.out.println(seq1);
@@ -81,11 +88,14 @@ public class Main {
 
             try {
                 int inputNumber = Integer.parseInt(choice);
+                //input tree
+                //
 
                 //calc alignment
                 //print optimal alignment
                 //print max score
                 if (inputNumber == 3) {
+                    //error check
                     if(seq1.equals("") || seq2.equals("")){
                         System.out.println("Enter sequences first");
                     }
@@ -94,7 +104,9 @@ public class Main {
                             grid.useMatrix = true;
                             int m = 0;
                             int matrixNumber = 0;
+                            //allow user to select matrix at runtime
                             System.out.println("Choose matrix: ");
+                            //print all saved matrices
                             for(int i = 0; i < grid.matrices.size(); i++){
                                 System.out.println("" + i + ": " + grid.matrices.get(i).toString());
                             }
@@ -102,7 +114,7 @@ public class Main {
                             String s = input.nextLine();
                             m = Integer.parseInt(s);
 
-                            //check that input is valid matrix
+                            //check that input is a valid matrix
                             if(m < grid.matrices.size()){
                                 grid.setCurrentMatrix(m);
                             }
@@ -112,18 +124,20 @@ public class Main {
                                 grid.setCurrentMatrix(0);
                             }
                         }
+                        //nulceotide mode doesnt use a matrix
                         else{
                             grid.useMatrix = false;
                         }
                         grid.findAlignment();
                         grid.printAlignment();
-                        System.out.println("\nMax score:");
-                        System.out.println(grid.getMaxScore());
+                        System.out.println("Max score: " + grid.getMaxScore());
+                        System.out.println();
                     }
                 }
 
                 //print current grid
                 else if(inputNumber == 4){
+                    //error check
                     if(seq1.equals("") || seq2.equals("")){
                         System.out.println("Enter sequences first");
                     }
@@ -134,23 +148,25 @@ public class Main {
 
                 //print current arrow grid
                 else if(inputNumber == 5) {
+                    //error check
                     if(seq1.equals("") || seq2.equals("")){
                         System.out.println("Enter sequences first");
                     }
                     else {
                         grid.printArrowGrid();
                     }
-
                 }
 
                 //change mode
                 else if(inputNumber == 6){
                     proteinMode = !proteinMode;
+                    //resets sequences
                     seq1 = "";
                     seq2 = "";
                     System.out.print("mode changed");
                 }
-                //ui
+
+                //manual sequence input
                 else if (inputNumber == 1) {
                     //take UI
                     System.out.print("Enter the first sequence: ");
@@ -177,24 +193,26 @@ public class Main {
                     }
                 }
 
-                //file path input
+                //file path sequence input
                 else if(inputNumber == 2){
                     System.out.println("Enter filepath: ");
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
                         //read input from file
+                        //
                         String seq1Name = read.readLine();
 
                         String firstInput = read.readLine();
                         String current = "";
-                        while(!current.contains(">")){
+                        //read into first sequence until second sequence reached
+                        while(!current.contains(">") || current != null){
                             firstInput = firstInput + current;
                             current = read.readLine();
                         }
-
                         String seq2Name = current;
                         String secondInput = read.readLine();
                         current = "";
+                        //read into second sequence until end of file reached
                         while(current != null){
                             secondInput = secondInput + current;
                             current = read.readLine();
@@ -227,6 +245,8 @@ public class Main {
 
                     }
                 }
+
+                //create new matrix
                 else if(inputNumber == 7){
                     boolean validMatrix = true;
 
@@ -238,7 +258,8 @@ public class Main {
                     char[] chars = acids.toCharArray();
                     System.out.println("Enter scores of matrix: (Left to right, Top to Bottom)");
                     String scores = input.nextLine();
-                    //store matrix values in array of ints
+
+                    //store matrix scores in array of ints
                     String[] v = scores.trim().split("\\s+");
                     int[] scoresArray = new int[v.length];
                     for (int i = 0; i < v.length; i++) {
@@ -265,7 +286,7 @@ public class Main {
                         validMatrix = false;
                     }
 
-                    //create new matrix
+                    //create new matrix if chars and scores are valid
                     if(validMatrix){
                         grid.setUpNewMatrix(name, chars, scoresArray);
                         System.out.println("Matrix created");
@@ -273,9 +294,7 @@ public class Main {
                     else{
                         System.out.println("Matrix not created");
                     }
-
                     //grid.printMatrices();
-
                 }
                 //quit
                 else if(inputNumber == 9){
@@ -283,6 +302,7 @@ public class Main {
                     seq2 = "";
                     break;
                 }
+                //user input error
                 else {
                     System.out.println("\n");
                     System.out.println("Invalid input.");
@@ -294,7 +314,4 @@ public class Main {
         }
         System.out.println("Goodbye");
     }
-
-
-
 }
