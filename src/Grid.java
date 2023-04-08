@@ -99,12 +99,18 @@ public class Grid {
         //set the top three empty cells
         cells[0][0].set = true;
         cells[0][0].nucleotide = '/';
+        cells[0][0].arrowDir = -1;
+
 
         cells[1][0].set = true;
         cells[1][0].nucleotide = '/';
+        cells[1][0].arrowDir = -1;
+
 
         cells[0][1].set = true;
         cells[0][1].nucleotide = '/';
+        cells[0][1].arrowDir = -1;
+
 
 
         //add sequences to grid
@@ -113,11 +119,15 @@ public class Grid {
         for(int i = 0; i < gridLength - PADDING; i++){
             cells[0][PADDING + i].nucleotide = querySequence1[i];
             cells[0][PADDING + i].set = true;
+            cells[0][PADDING + i].arrowDir = -1;
+
         }
         //sequence2
         for(int i = 0; i < gridHeight - PADDING; i++){
             cells[PADDING + i][0].nucleotide = querySequence2[i];
             cells[PADDING + i][0].set = true;
+            cells[PADDING + i][0].arrowDir = -1;
+
         }
 
 
@@ -228,6 +238,13 @@ public class Grid {
 
         //loop until the "0" cell is reached
         while(cells[currentHeight][currentLength].arrowDir != -1){
+            if(currentHeight < 0 || currentLength < 0 || index < 0){
+                System.out.println("bad index");
+                System.out.println(currentHeight);
+                System.out.println(currentLength);
+                System.out.println(index);
+
+            }
             //arrow points north
             if(cells[currentHeight][currentLength].arrowDir == NORTH) {
                 //add indel to the north sequence
@@ -248,9 +265,9 @@ public class Grid {
             }
             else if(cells[currentHeight][currentLength].arrowDir == NORTHWEST) {
                 //add character to north sequence
-                alignedSequence1[index] = querySequence1[currentLength-2];
+                alignedSequence1[index] = querySequence1[currentLength- PADDING];
                 //add character to west sequence
-                alignedSequence2[index] = querySequence2[currentHeight-2];
+                alignedSequence2[index] = querySequence2[currentHeight- PADDING];
                 //move to north west cell
                 currentHeight = currentHeight -1;
                 currentLength = currentLength -1;
