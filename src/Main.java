@@ -10,8 +10,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         String seq1 = "";
         String seq2 = "";
-        String seq1Name = "";
-        String seq2Name = "";
+
 
         String mode = "nucleotide";
 
@@ -29,18 +28,19 @@ public class Main {
                 System.out.println("Sequence 1: (Enter sequence)");
                 System.out.println("Sequence 2: (Enter sequence)");
             }
-            else if(seq1Name.equals("") || seq2Name.equals("")){
+            else if(grid.sequence1Name.equals("") || grid.sequence2Name.equals("")){
                 System.out.println("Sequence 1: " + seq1);
                 System.out.println("Sequence 2: " + seq2);
             }
             else{
-                System.out.println(" " + seq1Name + " " + seq1);
-                System.out.println(" " + seq2Name + " " + seq2);
+                System.out.println(" " + grid.sequence1Name + " " + seq1);
+                System.out.println(" " + grid.sequence2Name + " " + seq2);
             }
             String choice = input.nextLine();
 
             try {
                 int inputNumber = Integer.parseInt(choice);
+
                 //calc alignment
                 //print optimal alignment
                 //print max score
@@ -61,6 +61,7 @@ public class Main {
                         System.out.println(grid.getMaxScore());
                     }
                 }
+
                 //print current grid
                 else if(inputNumber == 4){
                     if(seq1.equals("") || seq2.equals("")){
@@ -70,6 +71,7 @@ public class Main {
                         grid.printGrid();
                     }
                 }
+
                 //print current arrow grid
                 else if(inputNumber == 5) {
                     if(seq1.equals("") || seq2.equals("")){
@@ -80,6 +82,7 @@ public class Main {
                     }
 
                 }
+
                 //change mode
                 else if(inputNumber == 6){
                     if(mode.equalsIgnoreCase("nucleotide")){
@@ -90,8 +93,6 @@ public class Main {
                     }
                     seq1 = "";
                     seq2 = "";
-                    seq1Name = "";
-                    seq2Name = "";
                     System.out.print("mode changed");
 
                 }
@@ -118,23 +119,21 @@ public class Main {
                         char[] seq2Array = seq2.toCharArray();
                         grid = new BLOSUMGrid(seq1Array, seq2Array);
 
-                        seq1Name = "";
-                        seq2Name = "";
-                        System.out.println("\n");
+                        System.out.println();
                         System.out.println("Sequences saved");
-
                     }
                 }
+
                 //file path input
                 else if(inputNumber == 2){
                     System.out.println("Enter filepath: ");
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
-                        seq1Name = read.readLine();
+                        //read input from file
+                        String seq1Name = read.readLine();
                         String firstInput = read.readLine();
-                        seq2Name = read.readLine();
+                        String seq2Name = read.readLine();
                         String secondInput = read.readLine();
-
                         firstInput = firstInput.toLowerCase();
                         secondInput = secondInput.toLowerCase();
 
@@ -149,6 +148,7 @@ public class Main {
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
                             grid = new BLOSUMGrid(seq1Array, seq2Array);
+                            grid.setNames(seq1Name, seq2Name);
 
                             System.out.println("\n");
                             System.out.println("Sequences saved");
@@ -157,16 +157,12 @@ public class Main {
                     catch(Exception e){
                         System.out.println("\n");
                         System.out.println("Error reading filepath");
-                        seq1Name = "";
-                        seq2Name = "";
+
                         seq1 = "";
                         seq2 = "";
-
                     }
                 }
                 else if(inputNumber == 9){
-                    seq1Name = "";
-                    seq2Name = "";
                     seq1 = "";
                     seq2 = "";
                     break;

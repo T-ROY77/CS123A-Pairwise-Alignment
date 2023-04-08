@@ -24,10 +24,10 @@ public class Grid {
     public int gridHeight;
     public char[] querySequence1;
     public char[] querySequence2;
-//    public char[] alignedSequence1;
-//    public char[] alignedSequence2;
     public ArrayList<Character> alignedSequence1;
     public ArrayList<Character> alignedSequence2;
+    public String sequence1Name = "";
+    public String sequence2Name = "";
 
     public int maxScore;
     public boolean useMatrix;
@@ -342,6 +342,11 @@ public class Grid {
         return Math.max(gridHeight, gridLength);
     }
 
+    public void setNames(String name1, String name2){
+        sequence1Name = name1;
+        sequence2Name = name2;
+    }
+
     //@method printAlignment
     //
     //prints the alignment of the 2 sequences
@@ -351,8 +356,17 @@ public class Grid {
             throw new Exception("Alignment has not been calculated yet");
         }
         else {
-            System.out.println(alignedSequence1.toString());
-            System.out.println(alignedSequence2);
+            System.out.println();
+            System.out.println("Calulated optimal alignment");
+            System.out.println();
+
+            alignedSequence1.forEach(elem ->{
+                System.out.print(elem);
+            });
+            System.out.println();
+            alignedSequence2.forEach(elem ->{
+                System.out.print(elem);
+            });
         }
     }
 
