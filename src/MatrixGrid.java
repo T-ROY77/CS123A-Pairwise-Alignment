@@ -35,7 +35,6 @@ public class MatrixGrid extends Grid{
     public int getMatrixScore(String match) throws Exception{
         //error check
         //checks if the string is backwards
-        System.out.println(currentMatrix);
         if(!matrices.get(currentMatrix).matrixMap.containsKey(match)){
             match = "" + match.charAt(1) + match.charAt(0);
             if(!matrices.get(currentMatrix).matrixMap.containsKey(match)){

@@ -92,11 +92,20 @@ public class Main {
                         if(proteinMode){
                             grid.useMatrix = true;
                             int m = 0;
+                            int matrixNumber = 0;
                             System.out.println("Choose matrix: ");
+                            for(int i = 0; i < grid.matrices.size(); i++){
+                                System.out.println("" + i + ": " + grid.matrices.get(i).toString());
+                            }
+
+
+
+
                             String s = input.nextLine();
                             m = Integer.parseInt(s);
+                            //check that input is valid matrix
                             grid.setCurrentMatrix(m);
-                            System.out.println("using matrix" + grid.currentMatrix);
+                            System.out.println("using matrix: " + grid.currentMatrix);
 
                         }
                         else{
