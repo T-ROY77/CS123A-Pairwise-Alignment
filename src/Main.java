@@ -151,18 +151,24 @@ public class Main {
                             grid = new BLOSUMGrid(seq1Array, seq2Array);
 
                             System.out.println("\n");
-                            System.out.println(seq1Name);
-                            System.out.println(seq2Name);
                             System.out.println("Sequences saved");
                         }
                     }
                     catch(Exception e){
                         System.out.println("\n");
                         System.out.println("Error reading filepath");
+                        seq1Name = "";
+                        seq2Name = "";
+                        seq1 = "";
+                        seq2 = "";
 
                     }
                 }
                 else if(inputNumber == 9){
+                    seq1Name = "";
+                    seq2Name = "";
+                    seq1 = "";
+                    seq2 = "";
                     break;
                 }
                 else {

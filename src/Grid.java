@@ -230,11 +230,16 @@ public class Grid {
         alignedSequence2 = new char[getLongestDim() - PADDING];
 
         //build the aligned sequences backwards
-        int index = getLongestDim() - PADDING - 1;
+        int index = getLongestDim() - PADDING -1;
+        System.out.println(index);
+
+
+
 
         //start with the bottom right cell
         int currentHeight = gridHeight-1;
         int currentLength = gridLength-1;
+
 
         //loop until the "0" cell is reached
         while(cells[currentHeight][currentLength].arrowDir != -1){
@@ -243,51 +248,56 @@ public class Grid {
                 System.out.println(currentHeight);
                 System.out.println(currentLength);
                 System.out.println(index);
-
+                System.out.println(cells[currentHeight][currentLength].score);
+                currentHeight = currentHeight - 1;
+                currentLength = currentLength - 1;
             }
-            //arrow points north
-            if(cells[currentHeight][currentLength].arrowDir == NORTH) {
-                //add indel to the north sequence
-                alignedSequence1[index] = '-';
-                //add character to west sequence
-                alignedSequence2[index] = querySequence2[currentHeight - PADDING];
-                //move to the north cell
-                currentHeight = currentHeight -1;
-            }
-            //arrow points west
-            else if(cells[currentHeight][currentLength].arrowDir == WEST) {
-                //add indel to west sequence
-                alignedSequence2[index] = '-';
-                //add character to north sequence
-                alignedSequence1[index] = querySequence1[currentLength - PADDING];
-                //move to the west cell
-                currentLength = currentLength -1;
-            }
-            else if(cells[currentHeight][currentLength].arrowDir == NORTHWEST) {
-                //add character to north sequence
-                alignedSequence1[index] = querySequence1[currentLength- PADDING];
-                //add character to west sequence
-                alignedSequence2[index] = querySequence2[currentHeight- PADDING];
-                //move to north west cell
-                currentHeight = currentHeight -1;
-                currentLength = currentLength -1;
+            else {
+                //arrow points north
+                if (cells[currentHeight][currentLength].arrowDir == NORTH) {
+                    //add indel to the north sequence
+                    alignedSequence1[index] = '-';
+                    //add character to west sequence
+                    alignedSequence2[index] = querySequence2[currentHeight - PADDING];
+                    //move to the north cell
+                    currentHeight = currentHeight - 1;
+                }
+                //arrow points west
+                else if (cells[currentHeight][currentLength].arrowDir == WEST) {
+                    //add indel to west sequence
+                    alignedSequence2[index] = '-';
+                    //add character to north sequence
+                    alignedSequence1[index] = querySequence1[currentLength - PADDING];
+                    //move to the west cell
+                    currentLength = currentLength - 1;
+                } else if (cells[currentHeight][currentLength].arrowDir == NORTHWEST) {
+                    //add character to north sequence
+                    alignedSequence1[index] = querySequence1[currentLength - PADDING];
+                    //add character to west sequence
+                    alignedSequence2[index] = querySequence2[currentHeight - PADDING];
+                    //move to north west cell
+                    currentHeight = currentHeight - 1;
+                    currentLength = currentLength - 1;
+                } else {
+                    System.out.println("bad arrowDir");
+                }
             }
             index--;
         }
+        System.out.println(index);
+
     }
 
     //@Method findAlignment
     //
     //calls all necessary functions in order to find an optimal alignment of querySequence1 and querySequence2
     public void findAlignment() throws Exception {
-        try {
+
             setUpGrid();
             calcGrid();
             calcAlignment();
-        }
-        catch(Exception e) {
-            throw new Exception("Alignment was not calculated");
-        }
+
+
     }
 
     //@method getMaxScore
