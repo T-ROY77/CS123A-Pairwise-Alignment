@@ -21,6 +21,7 @@ public class Matrix {
         if(acids.length == 0 || scores.length() == 0){
             throw new Exception("values not initialized");
         }
+
         //store matrix values in array of ints
         String[] v = scores.trim().split("\\s+");
         int[] scoresArray = new int[v.length];
@@ -42,6 +43,16 @@ public class Matrix {
             }
         }
     }
+
+    public void printMatrixMap() {
+        for (String variableName : matrixMap.keySet()) {
+            String variableKey = variableName;
+            Integer variableValue = matrixMap.get(variableName);
+            System.out.println(" " + variableKey + " = " + variableValue);
+        }
+    }
+
+
     public String toString(){
         return name;
     }

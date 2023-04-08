@@ -15,9 +15,10 @@ public class MatrixGrid extends Grid{
     public MatrixGrid(char[] seq1, char[] seq2) throws Exception {
 
         super(seq1, seq2);
-        BLOSUM62 = new Matrix("BLOSUM62", BLOSUM62Chars, BLOSUM62Values);
         matrices = new ArrayList<>();
-        matrices.add(BLOSUM62);
+
+        //set up BLOSUM62 matrix
+        setUpNewMatrix("BLOSUM62", BLOSUM62Chars, BLOSUM62Values);
         currentMatrix = 0;
     }
 
@@ -58,40 +59,15 @@ public class MatrixGrid extends Grid{
     }
 
     //@method setUpNewMatrix
+    //@param matrix name
+    //@param amino acids
+    //@param scores
     //
-    //sets up matrix
-    public void setUpNewMatrix() throws Exception {
+    //sets up a new matrix
+    //add new matrix to matrices array
+    public void setUpNewMatrix(String name, char[] c, String scores) throws Exception {
 
-        char[] chars = BLOSUM62Chars;
-        String values = BLOSUM62Values;
-
-        //store matrix values in array of ints
-        String[] v = values.trim().split("\\s+");
-        int[] scores = new int[v.length];
-        for (int i = 0; i < v.length; i++) {
-            scores[i] = Integer.parseInt(v[i]);
-        }
-
-        //initialize matrix
-        matrix = new HashMap<String, Integer>();
-
-        //builds the matrix based on the chars and values
-        //builds the matrix left to right; top to bottom
-        int scoreIndex = 0;
-        for(int i = 0; i < chars.length; i++){
-            for(int j = 0; j < chars.length; j++){
-                String s = "" + chars[i] + chars[j];
-                matrix.put(s, new Integer(scores[scoreIndex]));
-                scoreIndex++;
-            }
-        }
-
-        //print matrix for error checking
-//        for (String variableName : BLOSUM.keySet())
-//        {
-//            String variableKey = variableName;
-//            Integer variableValue = BLOSUM.get(variableName);
-//            System.out.println(" " + variableKey + " = " + variableValue);
-//        }
+        Matrix m = new Matrix(name, c, scores);
+        matrices.add(m);
     }
 }
