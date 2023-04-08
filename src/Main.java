@@ -229,7 +229,8 @@ public class Main {
                 }
                 else if(inputNumber == 7){
                     System.out.println("Enter name of matrix: ");
-
+                    //***********
+                    //take ui
 
 
                     char[] Chars = new char[]{'a', 'r', 'n', 'd', 'c', 'q', 'e', 'g', 'h', 'i', 'l', 'k', 'm', 'f', 'p', 's', 't', 'w', 'y', 'v', 'b', 'z', 'x'};
