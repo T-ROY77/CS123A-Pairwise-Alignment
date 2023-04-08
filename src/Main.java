@@ -3,38 +3,79 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 public class Main {
+    public static MatrixGrid grid = new MatrixGrid();
+
+    public static Scanner input;
+    public static String seq1 = "";
+    public static String seq2 = "";
+
+
+    public static boolean proteinMode;
+
+
+
+
+    public static boolean checkSeq(String seq1, String seq2){
+        if(proteinMode){
+            //all amino acids(all alphabet letters except o, u, and j)
+            return (seq1.matches("[a-ik-np-tv-z]+") && seq2.matches("[a-ik-np-tv-z]+"));
+        }
+        else{
+            //only alphabet letters
+            return (seq1.matches("[a-z]+") && seq2.matches("[a-z]+"));
+        }
+    }
+
+
     public static void main(String[] args) throws Exception {
-        MatrixGrid grid = new MatrixGrid();
 
-        Scanner input = new Scanner(System.in);
-        String seq1 = "";
-        String seq2 = "";
-
-
-        String mode = "nucleotide";
+        input = new Scanner(System.in);
+        proteinMode = false;
+        System.out.println("Pairwise Alignment Tool");
 
         while (true) {
 
-            System.out.println("\n");
+            //print sequences
+            System.out.println();
+            if(seq1.equals("") || seq2.equals("")){
+                System.out.println("Sequence 1:");
+                System.out.println("(Enter sequence)");
+
+
+                System.out.println("Sequence 2:");
+                System.out.println("(Enter sequence)");
+            }
+            else if(grid.sequence1Name.equals("") || grid.sequence2Name.equals("")){
+                System.out.println("Sequence 1:");
+                System.out.println(seq1);
+
+                System.out.println("Sequence 2:");
+                System.out.println(seq2);
+            }
+            else{
+                System.out.println(" " + grid.sequence1Name);
+                System.out.println(seq1);
+
+                System.out.println(" " + grid.sequence2Name);
+                System.out.println(seq2);
+            }
+
+            //print choices
+            System.out.println();
             System.out.println("1: Enter new query sequences");
             System.out.println("2: Enter new query sequences with filepath");
             System.out.println("3: Calculate an Optimal Alignment");
             System.out.println("4: Print grid");
             System.out.println("5: Print arrow grid");
-            System.out.println("6: Change mode (" + mode + " mode)");
-            System.out.println("9: quit");
-            if(seq1.equals("") || seq2.equals("")){
-                System.out.println("Sequence 1: (Enter sequence)");
-                System.out.println("Sequence 2: (Enter sequence)");
-            }
-            else if(grid.sequence1Name.equals("") || grid.sequence2Name.equals("")){
-                System.out.println("Sequence 1: " + seq1);
-                System.out.println("Sequence 2: " + seq2);
+            if(proteinMode){
+                System.out.println("6: Change mode (Protein mode)");
             }
             else{
-                System.out.println(" " + grid.sequence1Name + " " + seq1);
-                System.out.println(" " + grid.sequence2Name + " " + seq2);
+                System.out.println("6: Change mode (Nucleotide mode)");
             }
+
+            System.out.println("9: quit");
+
             String choice = input.nextLine();
 
             try {
@@ -48,11 +89,11 @@ public class Main {
                         System.out.println("Enter sequences first");
                     }
                     else {
-                        if(mode.equalsIgnoreCase("nucleotide")){
-                            grid.useMatrix = false;
+                        if(proteinMode){
+                            grid.useMatrix = true;
                         }
                         else{
-                            grid.useMatrix = true;
+                            grid.useMatrix = false;
                         }
                         grid.findAlignment();
                         grid.printAlignment();
@@ -84,16 +125,10 @@ public class Main {
 
                 //change mode
                 else if(inputNumber == 6){
-                    if(mode.equalsIgnoreCase("nucleotide")){
-                        mode = "protein";
-                    }
-                    else{
-                        mode = "nucleotide";
-                    }
+                    proteinMode = !proteinMode;
                     seq1 = "";
                     seq2 = "";
                     System.out.print("mode changed");
-
                 }
                 //ui
                 else if (inputNumber == 1) {
@@ -106,20 +141,21 @@ public class Main {
                     firstInput = firstInput.toLowerCase();
                     secondInput = secondInput.toLowerCase();
 
-                    //check that sequence is only letters excluding o u and j (no amino acid)
-                    if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
-                        System.out.println("Invalid sequence");
-                    }
-                    else {
+
+                    //check that sequence is valid
+                    if(Main.checkSeq(firstInput, secondInput)) {
                         //create the new grid
-                        seq1 = firstInput.toLowerCase();
-                        seq2 = secondInput.toLowerCase();
+                        seq1 = firstInput;
+                        seq2 = secondInput;
                         char[] seq1Array = seq1.toCharArray();
                         char[] seq2Array = seq2.toCharArray();
                         grid = new MatrixGrid(seq1Array, seq2Array);
 
                         System.out.println();
                         System.out.println("Sequences saved");
+                    }
+                    else{
+                        System.out.println("Invalid sequence");
                     }
                 }
 
@@ -130,28 +166,41 @@ public class Main {
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
                         //read input from file
                         String seq1Name = read.readLine();
+
                         String firstInput = read.readLine();
-                        String seq2Name = read.readLine();
+                        String current = "";
+                        while(!current.contains(">")){
+                            firstInput = firstInput + current;
+                            current = read.readLine();
+                        }
+
+                        String seq2Name = current;
                         String secondInput = read.readLine();
+                        current = "";
+                        while(current != null){
+                            secondInput = secondInput + current;
+                            current = read.readLine();
+                        }
+
                         firstInput = firstInput.toLowerCase();
                         secondInput = secondInput.toLowerCase();
 
-                        //check that sequence is only letters excluding o u and j (no amino acid)
-                        if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
-                            System.out.println("Invalid sequence");
-                        }
-                        else {
+                        //check that sequence is valid
+                        if(Main.checkSeq(firstInput, secondInput)) {
                             //create the new grid
                             seq1 = firstInput;
                             seq2 = secondInput;
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
                             grid = new MatrixGrid(seq1Array, seq2Array);
-                            grid.setNames(seq1Name, seq2Name);
 
-                            System.out.println("\n");
+                            System.out.println();
                             System.out.println("Sequences saved");
                         }
+                        else{
+                            System.out.println("Invalid sequence");
+                        }
+                        read.close();
                     }
                     catch(Exception e){
                         System.out.println("\n");
@@ -159,6 +208,7 @@ public class Main {
 
                         seq1 = "";
                         seq2 = "";
+
                     }
                 }
                 else if(inputNumber == 9){
@@ -177,4 +227,7 @@ public class Main {
         }
         System.out.println("Goodbye");
     }
+
+
+
 }
