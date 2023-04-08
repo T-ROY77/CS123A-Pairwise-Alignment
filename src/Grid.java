@@ -104,6 +104,14 @@ public class Grid {
             throw new Exception("Query sequences not set");
         }
 
+        //reset all cells
+        for (int i = 0; i < gridHeight; i++) {
+            for (int j = 0; j < gridLength; j++) {
+                cells[i][j].isSet = false;
+            }
+        }
+
+
         //set the top three empty cells
         cells[0][0].isSet = true;
         cells[0][0].character = '/';

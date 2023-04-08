@@ -91,6 +91,13 @@ public class Main {
                     else {
                         if(proteinMode){
                             grid.useMatrix = true;
+                            int m = 0;
+                            System.out.println("Choose matrix: ");
+                            String s = input.nextLine();
+                            m = Integer.parseInt(s);
+                            grid.setCurrentMatrix(m);
+                            System.out.println("using matrix" + grid.currentMatrix);
+
                         }
                         else{
                             grid.useMatrix = false;
@@ -154,7 +161,7 @@ public class Main {
                         System.out.println();
                         System.out.println("Sequences saved");
 
-                        grid.printMatrices();
+                        //grid.printMatrices();
 
                     }
                     else{
