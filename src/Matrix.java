@@ -45,6 +45,7 @@ public class Matrix {
     }
 
     public void printMatrixMap() {
+        System.out.println(name);
         for (String variableName : matrixMap.keySet()) {
             String variableKey = variableName;
             Integer variableValue = matrixMap.get(variableName);

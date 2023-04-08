@@ -153,6 +153,9 @@ public class Main {
 
                         System.out.println();
                         System.out.println("Sequences saved");
+
+                        grid.printMatrices();
+
                     }
                     else{
                         System.out.println("Invalid sequence");
