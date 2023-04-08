@@ -49,31 +49,17 @@ public class Grid {
     //
     //calculates height and length of grid
     //initializes grid and cells
-    public Grid(char[] seq1, char[] seq2){
+    public Grid(){
 
         maxScore = Integer.MIN_VALUE;
-
-        querySequence1 = seq1;
-        querySequence2 = seq2;
+        useMatrix = false;
 
         //calculate grid dimensions
-        gridLength = seq1.length + PADDING;
-        gridHeight = seq2.length + PADDING;
-
-        //initialize grid
-        cells = new Cell[gridHeight][gridLength];
-
-        //initialize cells inside grid
-        for (int i = 0; i < gridHeight; i++) {
-            for (int j = 0; j < gridLength; j++)
-                cells[i][j] = new Cell();
-        }
-        useMatrix = false;
-        //initialize matrix
-        //setUpMatrix();
+        gridLength = PADDING;
+        gridHeight = PADDING;
     }
 
-    public Grid(){}
+    //public Grid(){}
 
 
     //basic grid does not use a matrix
@@ -103,13 +89,26 @@ public class Grid {
         if(querySequence1 == null || querySequence2 == null) {
             throw new Exception("Query sequences not set");
         }
+        //calculate grid dimensions
+        gridLength = querySequence1.length + PADDING;
+        gridHeight = querySequence2.length + PADDING;
 
-        //reset all cells
+
+        //initialize grid array
+        cells = new Cell[gridHeight][gridLength];
+
+        //initialize cells inside grid
         for (int i = 0; i < gridHeight; i++) {
-            for (int j = 0; j < gridLength; j++) {
-                cells[i][j].isSet = false;
-            }
+            for (int j = 0; j < gridLength; j++)
+                cells[i][j] = new Cell();
         }
+
+//        //reset all cells
+//        for (int i = 0; i < gridHeight; i++) {
+//            for (int j = 0; j < gridLength; j++) {
+//                cells[i][j].isSet = false;
+//            }
+//        }
 
 
         //set the top three empty cells
@@ -330,6 +329,11 @@ public class Grid {
     public void setNames(String name1, String name2){
         sequence1Name = name1;
         sequence2Name = name2;
+    }
+
+    public void setSequences(String seq1, String seq2){
+        querySequence1 = seq1.toCharArray();
+        querySequence2 = seq2.toCharArray();
     }
 
     //@method printAlignment

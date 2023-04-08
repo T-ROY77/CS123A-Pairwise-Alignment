@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 public class Main {
-    public static MatrixGrid grid = new MatrixGrid();
+    public static MatrixGrid grid;
 
     public static Scanner input;
     public static String seq1 = "";
@@ -29,6 +29,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        grid = new MatrixGrid();
         input = new Scanner(System.in);
         proteinMode = false;
         System.out.println("Pairwise Alignment Tool");
@@ -164,17 +165,12 @@ public class Main {
                     //check that sequence is valid
                     if(Main.checkSeq(firstInput, secondInput)) {
                         //create the new grid
+                        grid.setSequences(firstInput, secondInput);
+
                         seq1 = firstInput;
                         seq2 = secondInput;
-                        char[] seq1Array = seq1.toCharArray();
-                        char[] seq2Array = seq2.toCharArray();
-                        grid = new MatrixGrid(seq1Array, seq2Array);
-
                         System.out.println();
                         System.out.println("Sequences saved");
-
-                        //grid.printMatrices();
-
                     }
                     else{
                         System.out.println("Invalid sequence");
@@ -210,12 +206,10 @@ public class Main {
                         //check that sequence is valid
                         if(Main.checkSeq(firstInput, secondInput)) {
                             //create the new grid
+                            grid.setSequences(firstInput, secondInput);
+
                             seq1 = firstInput;
                             seq2 = secondInput;
-                            char[] seq1Array = seq1.toCharArray();
-                            char[] seq2Array = seq2.toCharArray();
-                            grid = new MatrixGrid(seq1Array, seq2Array);
-
                             System.out.println();
                             System.out.println("Sequences saved");
                         }
@@ -235,7 +229,8 @@ public class Main {
                 }
                 else if(inputNumber == 7){
                     System.out.println("Enter name of matrix: ");
-
+                    //***********
+                    //take ui
 
 
                     char[] Chars = new char[]{'a', 'r', 'n', 'd', 'c', 'q', 'e', 'g', 'h', 'i', 'l', 'k', 'm', 'f', 'p', 's', 't', 'w', 'y', 'v', 'b', 'z', 'x'};
