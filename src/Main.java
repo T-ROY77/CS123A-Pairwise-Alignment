@@ -12,6 +12,21 @@ public class Main {
 
     public static boolean proteinMode;
 
+
+
+
+    public static boolean checkSeq(String seq1, String seq2){
+        if(proteinMode){
+            //all amino acids(all alphabet letters except o, u, and j)
+            return (seq1.matches("[a-ik-np-tv-z]+") && seq2.matches("[a-ik-np-tv-z]+"));
+        }
+        else{
+            //only alphabet letters
+            return (seq1.matches("[a-z]+") && seq2.matches("[a-z]+"));
+        }
+    }
+
+
     public static void main(String[] args) throws Exception {
 
         input = new Scanner(System.in);
@@ -127,20 +142,20 @@ public class Main {
                     secondInput = secondInput.toLowerCase();
 
 
-                    //check that sequence is only letters excluding o u and j (no amino acid)
-                    if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
-                        System.out.println("Invalid sequence");
-                    }
-                    else {
+                    //check that sequence is valid
+                    if(Main.checkSeq(firstInput, secondInput)) {
                         //create the new grid
-                        seq1 = firstInput.toLowerCase();
-                        seq2 = secondInput.toLowerCase();
+                        seq1 = firstInput;
+                        seq2 = secondInput;
                         char[] seq1Array = seq1.toCharArray();
                         char[] seq2Array = seq2.toCharArray();
                         grid = new MatrixGrid(seq1Array, seq2Array);
 
                         System.out.println();
                         System.out.println("Sequences saved");
+                    }
+                    else{
+                        System.out.println("Invalid sequence");
                     }
                 }
 
@@ -150,9 +165,6 @@ public class Main {
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
                         //read input from file
-                        //**************************
-
-
                         String seq1Name = read.readLine();
 
                         String firstInput = read.readLine();
@@ -168,27 +180,25 @@ public class Main {
                         while(current != null){
                             secondInput = secondInput + current;
                             current = read.readLine();
-
                         }
 
                         firstInput = firstInput.toLowerCase();
                         secondInput = secondInput.toLowerCase();
 
-                        //check that sequence is only letters excluding o u and j (no amino acid)
-                        if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
-                            System.out.println("Invalid sequence");
-                        }
-                        else {
+                        //check that sequence is valid
+                        if(Main.checkSeq(firstInput, secondInput)) {
                             //create the new grid
                             seq1 = firstInput;
                             seq2 = secondInput;
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
                             grid = new MatrixGrid(seq1Array, seq2Array);
-                            grid.setNames(seq1Name, seq2Name);
 
-                            System.out.println("\n");
+                            System.out.println();
                             System.out.println("Sequences saved");
+                        }
+                        else{
+                            System.out.println("Invalid sequence");
                         }
                         read.close();
                     }
@@ -218,8 +228,6 @@ public class Main {
         System.out.println("Goodbye");
     }
 
-    public void checkSeq(){
 
-    }
 
 }
