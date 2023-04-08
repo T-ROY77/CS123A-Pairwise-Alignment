@@ -98,15 +98,18 @@ public class Main {
                                 System.out.println("" + i + ": " + grid.matrices.get(i).toString());
                             }
 
-
-
-
                             String s = input.nextLine();
                             m = Integer.parseInt(s);
-                            //check that input is valid matrix
-                            grid.setCurrentMatrix(m);
-                            System.out.println("using matrix: " + grid.currentMatrix);
 
+                            //check that input is valid matrix
+                            if(m < grid.matrices.size()){
+                                grid.setCurrentMatrix(m);
+                            }
+                            else{
+                                System.out.println("Invalid matrix");
+                                System.out.println("Using matrix 0");
+                                grid.setCurrentMatrix(0);
+                            }
                         }
                         else{
                             grid.useMatrix = false;
