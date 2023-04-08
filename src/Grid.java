@@ -52,6 +52,7 @@ public class Grid {
     public Grid(char[] seq1, char[] seq2){
 
         maxScore = Integer.MIN_VALUE;
+        useMatrix = false;
 
         querySequence1 = seq1;
         querySequence2 = seq2;
@@ -68,7 +69,6 @@ public class Grid {
             for (int j = 0; j < gridLength; j++)
                 cells[i][j] = new Cell();
         }
-        useMatrix = false;
         //initialize matrix
         //setUpMatrix();
     }
