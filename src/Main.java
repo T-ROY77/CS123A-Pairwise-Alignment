@@ -1,11 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        BLOSUMGrid grid = new BLOSUMGrid();
+        MatrixGrid grid = new MatrixGrid();
 
         Scanner input = new Scanner(System.in);
         String seq1 = "";
@@ -117,7 +116,7 @@ public class Main {
                         seq2 = secondInput.toLowerCase();
                         char[] seq1Array = seq1.toCharArray();
                         char[] seq2Array = seq2.toCharArray();
-                        grid = new BLOSUMGrid(seq1Array, seq2Array);
+                        grid = new MatrixGrid(seq1Array, seq2Array);
 
                         System.out.println();
                         System.out.println("Sequences saved");
@@ -147,7 +146,7 @@ public class Main {
                             seq2 = secondInput;
                             char[] seq1Array = seq1.toCharArray();
                             char[] seq2Array = seq2.toCharArray();
-                            grid = new BLOSUMGrid(seq1Array, seq2Array);
+                            grid = new MatrixGrid(seq1Array, seq2Array);
                             grid.setNames(seq1Name, seq2Name);
 
                             System.out.println("\n");
