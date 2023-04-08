@@ -2,13 +2,13 @@ import java.util.HashMap;
 
 public class Matrix {
 
-    String scores;
+    int[] scores;
     char[] acids;
     String name;
     public HashMap<String, Integer> matrixMap;
 
 
-    public Matrix(String n, char[] c, String v) throws Exception {
+    public Matrix(String n, char[] c, int[] v) throws Exception {
         acids = c;
         scores = v;
         name = n;
@@ -18,16 +18,11 @@ public class Matrix {
     public void createMap() throws Exception {
 
 
-        if(acids.length == 0 || scores.length() == 0){
+        if(acids.length == 0 || scores.length == 0){
             throw new Exception("values not initialized");
         }
 
-        //store matrix values in array of ints
-        String[] v = scores.trim().split("\\s+");
-        int[] scoresArray = new int[v.length];
-        for (int i = 0; i < v.length; i++) {
-            scoresArray[i] = Integer.parseInt(v[i]);
-        }
+
 
         //initialize matrixMap
         matrixMap = new HashMap<>();
@@ -38,7 +33,7 @@ public class Matrix {
         for(int i = 0; i < acids.length; i++){
             for(int j = 0; j < acids.length; j++){
                 String s = "" + acids[i] + acids[j];
-                matrixMap.put(s, new Integer(scoresArray[scoreIndex]));
+                matrixMap.put(s, new Integer(scores[scoreIndex]));
                 scoreIndex++;
             }
         }

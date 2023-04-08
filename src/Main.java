@@ -228,41 +228,56 @@ public class Main {
                     }
                 }
                 else if(inputNumber == 7){
+                    boolean validMatrix = true;
+
                     //take ui
                     System.out.println("Enter name of matrix: ");
                     String name = input.nextLine();
                     System.out.println("Enter order of amino acids");
                     String acids = input.nextLine();
                     char[] chars = acids.toCharArray();
-                    TreeSet set = new TreeSet<>(Arrays.asList(acids));
-
-
-
                     System.out.println("Enter scores of matrix: (Left to right, Top to Bottom)");
                     String scores = input.nextLine();
+                    //store matrix values in array of ints
+                    String[] v = scores.trim().split("\\s+");
+                    int[] scoresArray = new int[v.length];
+                    for (int i = 0; i < v.length; i++) {
+                        scoresArray[i] = Integer.parseInt(v[i]);
+                    }
+
+                    //error handling
+                    //
+                    //check that only amino acid chars are present
+                    if(!acids.matches("[a-ik-np-tv-z]+")){
+                        validMatrix = false;
+                    }
                     //check for duplicate acids
-                    if((set.size() == chars.length)){
-                        //check that only amino acid chars are present
-                        if(acids.matches("[a-ik-np-tv-z]+")){
-                            grid.setUpNewMatrix(name, chars, scores);
-                            System.out.println("Matrix created");
-                        }
-                        else{
-                            System.out.println("Invalid amino acid sequence");
-                            System.out.println("Matrix not created");
+                    HashSet set = new HashSet();
+                    for (char c : chars) {
+                        if (set.add(c) == false) {
+                            System.out.println("Duplicate amino acid");
+                            validMatrix = false;
                         }
                     }
+                    //check for correct number of scores
+                    if(scoresArray.length < chars.length * chars.length){
+                        System.out.println("Not enough scores");
+                        validMatrix = false;
+                    }
+
+                    //create new matrix
+                    if(validMatrix){
+                        grid.setUpNewMatrix(name, chars, scoresArray);
+                        System.out.println("Matrix created");
+                    }
                     else{
-                        System.out.println("Invalid amino acid sequence");
                         System.out.println("Matrix not created");
                     }
 
-
-                    //error handling
-
-                    grid.printMatrices();
+                    //grid.printMatrices();
 
                 }
+                //quit
                 else if(inputNumber == 9){
                     seq1 = "";
                     seq2 = "";

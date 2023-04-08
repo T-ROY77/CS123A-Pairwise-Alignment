@@ -16,11 +16,22 @@ public class MatrixGrid extends Grid{
         super();
         matrices = new ArrayList<>();
 
+        //store matrix values in array of ints
+        String[] v = BLOSUM62Values.trim().split("\\s+");
+        int[] scoresArray = new int[v.length];
+        for (int i = 0; i < v.length; i++) {
+            scoresArray[i] = Integer.parseInt(v[i]);
+        }
         //set up BLOSUM62 matrix
-        setUpNewMatrix("BLOSUM62", BLOSUM62Chars, BLOSUM62Values);
+        setUpNewMatrix("BLOSUM62", BLOSUM62Chars, scoresArray);
 
-
-        setUpNewMatrix("test", BLOSUM62Chars, testValues);
+        //store matrix values in array of ints
+        String[] x = testValues.trim().split("\\s+");
+        int[] scoresArray2 = new int[x.length];
+        for (int i = 0; i < x.length; i++) {
+            scoresArray2[i] = Integer.parseInt(x[i]);
+        }
+        //setUpNewMatrix("test", BLOSUM62Chars, scoresArray2);
 
     }
 
@@ -67,7 +78,7 @@ public class MatrixGrid extends Grid{
     //
     //sets up a new matrix
     //add new matrix to matrices array
-    public void setUpNewMatrix(String name, char[] c, String scores) throws Exception {
+    public void setUpNewMatrix(String name, char[] c, int[] scores) throws Exception {
 
         Matrix m = new Matrix(name, c, scores);
         matrices.add(m);
