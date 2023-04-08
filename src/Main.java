@@ -24,16 +24,26 @@ public class Main {
             System.out.println("6: Change mode (" + mode + " mode)");
             System.out.println("9: quit");
             if(seq1.equals("") || seq2.equals("")){
-                System.out.println("Sequence 1: (Enter sequence)");
-                System.out.println("Sequence 2: (Enter sequence)");
+                System.out.println("Sequence 1:");
+                System.out.println("(Enter sequence)");
+
+
+                System.out.println("Sequence 2:");
+                System.out.println("(Enter sequence)");
             }
             else if(grid.sequence1Name.equals("") || grid.sequence2Name.equals("")){
-                System.out.println("Sequence 1: " + seq1);
-                System.out.println("Sequence 2: " + seq2);
+                System.out.println("Sequence 1:");
+                System.out.println(seq1);
+
+                System.out.println("Sequence 2:");
+                System.out.println(seq2);
             }
             else{
-                System.out.println(" " + grid.sequence1Name + " " + seq1);
-                System.out.println(" " + grid.sequence2Name + " " + seq2);
+                System.out.println(" " + grid.sequence1Name);
+                System.out.println(seq1);
+
+                System.out.println(" " + grid.sequence2Name);
+                System.out.println(seq2);
             }
             String choice = input.nextLine();
 
@@ -130,10 +140,26 @@ public class Main {
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
                         //read input from file
                         //**************************
+
+
                         String seq1Name = read.readLine();
+
                         String firstInput = read.readLine();
-                        String seq2Name = read.readLine();
+                        String current = "";
+                        while(!current.contains(">")){
+                            firstInput = firstInput + current;
+                            current = read.readLine();
+                        }
+
+                        String seq2Name = current;
                         String secondInput = read.readLine();
+                        current = "";
+                        while(current != null){
+                            secondInput = secondInput + current;
+                            current = read.readLine();
+
+                        }
+
                         firstInput = firstInput.toLowerCase();
                         secondInput = secondInput.toLowerCase();
 
@@ -153,6 +179,7 @@ public class Main {
                             System.out.println("\n");
                             System.out.println("Sequences saved");
                         }
+                        read.close();
                     }
                     catch(Exception e){
                         System.out.println("\n");
@@ -160,6 +187,7 @@ public class Main {
 
                         seq1 = "";
                         seq2 = "";
+
                     }
                 }
                 else if(inputNumber == 9){
