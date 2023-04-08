@@ -3,26 +3,25 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 public class Main {
+    public static MatrixGrid grid = new MatrixGrid();
+
+    public static Scanner input;
+    public static String seq1 = "";
+    public static String seq2 = "";
+
+
+    public static boolean proteinMode;
+
     public static void main(String[] args) throws Exception {
-        MatrixGrid grid = new MatrixGrid();
 
-        Scanner input = new Scanner(System.in);
-        String seq1 = "";
-        String seq2 = "";
-
-
-        String mode = "nucleotide";
+        input = new Scanner(System.in);
+        proteinMode = false;
+        System.out.println("Pairwise Alignment Tool");
 
         while (true) {
 
-            System.out.println("\n");
-            System.out.println("1: Enter new query sequences");
-            System.out.println("2: Enter new query sequences with filepath");
-            System.out.println("3: Calculate an Optimal Alignment");
-            System.out.println("4: Print grid");
-            System.out.println("5: Print arrow grid");
-            System.out.println("6: Change mode (" + mode + " mode)");
-            System.out.println("9: quit");
+            //print sequences
+            System.out.println();
             if(seq1.equals("") || seq2.equals("")){
                 System.out.println("Sequence 1:");
                 System.out.println("(Enter sequence)");
@@ -45,6 +44,23 @@ public class Main {
                 System.out.println(" " + grid.sequence2Name);
                 System.out.println(seq2);
             }
+
+            //print choices
+            System.out.println();
+            System.out.println("1: Enter new query sequences");
+            System.out.println("2: Enter new query sequences with filepath");
+            System.out.println("3: Calculate an Optimal Alignment");
+            System.out.println("4: Print grid");
+            System.out.println("5: Print arrow grid");
+            if(proteinMode){
+                System.out.println("6: Change mode (Protein mode)");
+            }
+            else{
+                System.out.println("6: Change mode (Nucleotide mode)");
+            }
+
+            System.out.println("9: quit");
+
             String choice = input.nextLine();
 
             try {
@@ -58,11 +74,11 @@ public class Main {
                         System.out.println("Enter sequences first");
                     }
                     else {
-                        if(mode.equalsIgnoreCase("nucleotide")){
-                            grid.useMatrix = false;
+                        if(proteinMode){
+                            grid.useMatrix = true;
                         }
                         else{
-                            grid.useMatrix = true;
+                            grid.useMatrix = false;
                         }
                         grid.findAlignment();
                         grid.printAlignment();
@@ -94,16 +110,10 @@ public class Main {
 
                 //change mode
                 else if(inputNumber == 6){
-                    if(mode.equalsIgnoreCase("nucleotide")){
-                        mode = "protein";
-                    }
-                    else{
-                        mode = "nucleotide";
-                    }
+                    proteinMode = !proteinMode;
                     seq1 = "";
                     seq2 = "";
                     System.out.print("mode changed");
-
                 }
                 //ui
                 else if (inputNumber == 1) {
@@ -115,6 +125,7 @@ public class Main {
 
                     firstInput = firstInput.toLowerCase();
                     secondInput = secondInput.toLowerCase();
+
 
                     //check that sequence is only letters excluding o u and j (no amino acid)
                     if(!firstInput.matches("[a-ik-np-tv-z]+") || !secondInput.matches("[a-ik-np-tv-z]+") ){
@@ -206,4 +217,9 @@ public class Main {
         }
         System.out.println("Goodbye");
     }
+
+    public void checkSeq(){
+
+    }
+
 }
