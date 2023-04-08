@@ -129,6 +129,7 @@ public class Main {
                     String filepath = input.nextLine();
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
                         //read input from file
+                        //**************************
                         String seq1Name = read.readLine();
                         String firstInput = read.readLine();
                         String seq2Name = read.readLine();
