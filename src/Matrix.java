@@ -59,6 +59,7 @@ public class Matrix {
             System.out.print(" " + variableKey + " = " + variableValue);
             System.out.print(", ");
         }
+        System.out.println();
     }
 
 
