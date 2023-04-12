@@ -1,19 +1,17 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
 //@Author Troy Perez
 //
 //
 //@class Grid
 //
-//represents the grid used to calculate a pairwise alignment
+//represents the grid used in the Needleman Wunsch algorithm to calculate pairwise alignment
 //uses a 2d array of Cells to represent grid
 //
 
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class Grid {
-
-
-
 
     //class variables
     //
@@ -44,41 +42,18 @@ public class Grid {
 
 
     //@constructor
-    //@param querySequence1
-    //@param querySequence2
     //
-    //calculates height and length of grid
-    //initializes grid and cells
-    public Grid(char[] seq1, char[] seq2){
+    public Grid(){
 
         maxScore = Integer.MIN_VALUE;
-
-        querySequence1 = seq1;
-        querySequence2 = seq2;
+        useMatrix = false;
 
         //calculate grid dimensions
-        gridLength = seq1.length + PADDING;
-        gridHeight = seq2.length + PADDING;
+        gridLength = PADDING;
+        gridHeight = PADDING;
 
-        //initialize grid
-        cells = new Cell[gridHeight][gridLength];
-
-        //initialize cells inside grid
-        for (int i = 0; i < gridHeight; i++) {
-            for (int j = 0; j < gridLength; j++)
-                cells[i][j] = new Cell();
-        }
-        useMatrix = false;
-        //initialize matrix
-        //setUpMatrix();
     }
 
-    public Grid(){}
-
-
-    //basic grid does not use a matrix
-    public void setUpNewMatrix() throws Exception {
-    }
 
     //@method getMatchScore
     //@param match the string to score
@@ -103,23 +78,32 @@ public class Grid {
         if(querySequence1 == null || querySequence2 == null) {
             throw new Exception("Query sequences not set");
         }
+        //calculate grid dimensions
+        gridLength = querySequence1.length + PADDING;
+        gridHeight = querySequence2.length + PADDING;
+
+
+        //initialize grid array
+        cells = new Cell[gridHeight][gridLength];
+
+        //initialize cells inside grid
+        for (int i = 0; i < gridHeight; i++) {
+            for (int j = 0; j < gridLength; j++)
+                cells[i][j] = new Cell();
+        }
 
         //set the top three empty cells
         cells[0][0].isSet = true;
         cells[0][0].character = '/';
         cells[0][0].arrowDir = -1;
 
-
         cells[1][0].isSet = true;
         cells[1][0].character = '/';
         cells[1][0].arrowDir = -1;
 
-
         cells[0][1].isSet = true;
         cells[0][1].character = '/';
         cells[0][1].arrowDir = -1;
-
-
 
         //add sequences to grid
         //
@@ -128,14 +112,12 @@ public class Grid {
             cells[0][PADDING + i].character = querySequence1[i];
             cells[0][PADDING + i].isSet = true;
             cells[0][PADDING + i].arrowDir = -1;
-
         }
         //sequence2
         for(int i = 0; i < gridHeight - PADDING; i++){
             cells[PADDING + i][0].character = querySequence2[i];
             cells[PADDING + i][0].isSet = true;
             cells[PADDING + i][0].arrowDir = -1;
-
         }
 
 
@@ -160,8 +142,6 @@ public class Grid {
         cells[1][1].score = 0;
         cells[1][1].isSet = true;
         cells[1][1].character = ' ';
-
-
     }
 
     //@method calcGrid
@@ -171,50 +151,51 @@ public class Grid {
     //ties will default to north west arrow
     public void calcGrid() throws Exception {
         //error check
-        if(!cells[0][0].isSet) {
-            throw new Exception("Grid has not been set up");
+        if(cells == null){
+            System.out.println("Grid has not been set up");
         }
-        //initialize variables
-        int highest, north, west, nw;
+        else {
+            //initialize variables
+            int highest, north, west, nw;
 
-        //loop through all cells
-        for (int i = 0; i < gridHeight; i++) {
-            for (int j = 0; j < gridLength; j++)
+            //loop through all cells
+            for (int i = 0; i < gridHeight; i++) {
+                for (int j = 0; j < gridLength; j++)
 
-                //skip all cells that are already set
-                if(!cells[i][j].isSet){
+                    //skip all cells that are already set
+                    if (!cells[i][j].isSet) {
 
-                    //calculate all north and west score based on indel penalty
-                    north = cells[i-1][j].score - INDELPENALTY;
-                    west = cells[i][j-1].score - INDELPENALTY;
+                        //calculate all north and west score based on indel penalty
+                        north = cells[i - 1][j].score - INDELPENALTY;
+                        west = cells[i][j - 1].score - INDELPENALTY;
 
-                    //get the chars to compare
-                    String s = "" + cells[0][j].character + cells[i][0].character;
-                    //calculate north west score
-                    nw = cells[i-1][j-1].score + getMatchScore(s);
+                        //get the chars to compare
+                        String s = "" + cells[0][j].character + cells[i][0].character;
+                        //calculate north west score
+                        nw = cells[i - 1][j - 1].score + getMatchScore(s);
 
-                    //get max score from all three values
-                    highest = Math.max(north, west);
-                    highest = Math.max(highest, nw);
+                        //get max score from all three values
+                        highest = Math.max(north, west);
+                        highest = Math.max(highest, nw);
 
-                    //set the arrow direction
-                    if(highest == north){
-                        cells[i][j].arrowDir = NORTH;
+                        //set the arrow direction
+                        if (highest == north) {
+                            cells[i][j].arrowDir = NORTH;
+                        } else if (highest == west) {
+                            cells[i][j].arrowDir = WEST;
+                        }
+                        //if there is a tie, default to northwest arrow
+                        if (highest == nw) {
+                            cells[i][j].arrowDir = NORTHWEST;
+                        }
+
+                        cells[i][j].score = highest;
+                        cells[i][j].isSet = true;
                     }
-                    else if(highest == west){
-                        cells[i][j].arrowDir = WEST;
-                    }
-                    //if there is a tie, default to northwest arrow
-                    if(highest == nw){
-                        cells[i][j].arrowDir = NORTHWEST;
-                    }
-
-                    cells[i][j].score = highest;
-                    cells[i][j].isSet = true;
-                }
+            }
+            //after grid is calculated, stores the max score from the bottom right cell
+            maxScore = cells[gridHeight - 1][gridLength - 1].score;
         }
-        //after grid is calculated, stores the max score from the bottom right cell
-        maxScore = cells[gridHeight-1][gridLength-1].score;
     }
 
     //@method calcAlignment
@@ -223,65 +204,68 @@ public class Grid {
     //assumes calcGrid has finished
     public void calcAlignment() throws Exception {
         //error check
-        if(getMaxScore() != cells[gridHeight-1][gridLength-1].score) {
-            throw new Exception("Grid has not been calculated");
+        if(cells == null){
+            System.out.println("Grid has not been set up");
         }
+        else {
 
-        alignedSequence1 = new ArrayList<>();
-        alignedSequence2 = new ArrayList<>();
+            alignedSequence1 = new ArrayList<>();
+            alignedSequence2 = new ArrayList<>();
 
-        //start with the bottom right cell
-        int currentHeight = gridHeight-1;
-        int currentLength = gridLength-1;
+            //start with the bottom right cell
+            int currentHeight = gridHeight - 1;
+            int currentLength = gridLength - 1;
 
 
-        //loop until the "0" cell is reached
-        while(cells[currentHeight][currentLength].arrowDir != -1){
-            //error check
-            if(currentHeight < 0 || currentLength < 0){
-                System.out.println("bad index");
-                System.out.println(currentHeight);
-                System.out.println(currentLength);
-                currentHeight = currentHeight - 1;
-                currentLength = currentLength - 1;
-            }
-            else {
-
-                //arrow points north
-                if (cells[currentHeight][currentLength].arrowDir == NORTH) {
-
-                    //add indel to the north sequence
-                    alignedSequence1.add('-');
-                    //add character to west sequence
-                    alignedSequence2.add(querySequence2[currentHeight - PADDING]);
-                    //move to the north cell
-                    currentHeight = currentHeight - 1;
-                }
-                //arrow points west
-                else if (cells[currentHeight][currentLength].arrowDir == WEST) {
-
-                    //add indel to west sequence
-                    alignedSequence2.add('-');
-                    //add character to north sequence
-                    alignedSequence1.add(querySequence1[currentLength - PADDING]);
-                    //move to the west cell
-                    currentLength = currentLength - 1;
-                }
-                else if (cells[currentHeight][currentLength].arrowDir == NORTHWEST) {
-
-                    //add character to both sequences
-                    alignedSequence1.add(querySequence1[currentLength - PADDING]);
-                    alignedSequence2.add(querySequence2[currentHeight - PADDING]);
-
-                    //move to north west cell
+            //loop until the "0" cell is reached
+            while (cells[currentHeight][currentLength].arrowDir != -1) {
+                //error check
+                if (currentHeight < 0 || currentLength < 0) {
+                    System.out.println("bad index");
+                    System.out.println(currentHeight);
+                    System.out.println(currentLength);
                     currentHeight = currentHeight - 1;
                     currentLength = currentLength - 1;
+                } else {
+
+                    //arrow points north
+                    if (cells[currentHeight][currentLength].arrowDir == NORTH) {
+
+                        //add indel to the north sequence
+                        alignedSequence1.add('-');
+                        //add character to west sequence
+                        alignedSequence2.add(querySequence2[currentHeight - PADDING]);
+                        //move to the north cell
+                        currentHeight = currentHeight - 1;
+                    }
+
+                    //arrow points west
+                    else if (cells[currentHeight][currentLength].arrowDir == WEST) {
+
+                        //add indel to west sequence
+                        alignedSequence2.add('-');
+                        //add character to north sequence
+                        alignedSequence1.add(querySequence1[currentLength - PADDING]);
+                        //move to the west cell
+                        currentLength = currentLength - 1;
+                    }
+                    //arrow points north west
+                    else if (cells[currentHeight][currentLength].arrowDir == NORTHWEST) {
+
+                        //add character to both sequences
+                        alignedSequence1.add(querySequence1[currentLength - PADDING]);
+                        alignedSequence2.add(querySequence2[currentHeight - PADDING]);
+
+                        //move to north west cell
+                        currentHeight = currentHeight - 1;
+                        currentLength = currentLength - 1;
+                    }
                 }
             }
+            //sequences are calculated in reverse, so reverse them to correct order
+            Collections.reverse(alignedSequence1);
+            Collections.reverse(alignedSequence2);
         }
-        //sequences are calculated in reverse, so reverse them to correct order
-        Collections.reverse(alignedSequence1);
-        Collections.reverse(alignedSequence2);
     }
 
     //@Method findAlignment
@@ -324,13 +308,32 @@ public class Grid {
         sequence2Name = name2;
     }
 
+    //@method resetNames
+    //
+    //resets the names of the sequences
+    public void resetNames(){
+        sequence1Name = "";
+        sequence2Name = "";
+    }
+
+    //@method setSequences
+    //@param seq1
+    //@param seq2
+    //
+    //sets the sequences
+    public void setSequences(String seq1, String seq2){
+        querySequence1 = seq1.toCharArray();
+        querySequence2 = seq2.toCharArray();
+    }
+
     //@method printAlignment
     //
     //prints the alignment of the 2 sequences
     //assumes calcAlignment has finished
     public void printAlignment() throws Exception {
+        //error check
         if(alignedSequence1 == null || alignedSequence1 ==  null) {
-            throw new Exception("Alignment has not been calculated yet");
+            System.out.println("Alignment has not been calculated yet");
         }
         else {
             System.out.println();
@@ -351,10 +354,15 @@ public class Grid {
     //
     //prints the values of the grid formatted
     public void printGrid(){
-        for (int i = 0; i < gridHeight; i++) {
-            System.out.println("\n");
-            for (int j = 0; j < gridLength; j++) {
-                System.out.format("%5s", cells[i][j].toString());
+        if(cells == null){
+            System.out.println("Grid has not been set up");
+        }
+        else {
+            for (int i = 0; i < gridHeight; i++) {
+                System.out.println("\n");
+                for (int j = 0; j < gridLength; j++) {
+                    System.out.format("%5s", cells[i][j].toString());
+                }
             }
         }
     }
@@ -366,23 +374,28 @@ public class Grid {
     //<- = WEST
     //^<- = NORTH WEST
     public void printArrowGrid(){
-        String s = "";
-        for (int i = 0; i < gridHeight; i++) {
-            System.out.println("\n");
-            for (int j = 0; j < gridLength; j++) {
-                if (cells[i][j].arrowDir == NORTH) {
-                    s = "^";
-                } else if (cells[i][j].arrowDir == WEST) {
-                    s = "<-";
-                } else if (cells[i][j].arrowDir == NORTHWEST) {
-                    s = "^<-";
-                } else {
-                    s = "/";
-                }
-                System.out.format("%5s", s);
-                s = "";
-            }
+        if(cells == null){
+            System.out.println("Grid has not been set up");
         }
-        System.out.println();
+        else {
+            String s = "";
+            for (int i = 0; i < gridHeight; i++) {
+                System.out.println("\n");
+                for (int j = 0; j < gridLength; j++) {
+                    if (cells[i][j].arrowDir == NORTH) {
+                        s = "^";
+                    } else if (cells[i][j].arrowDir == WEST) {
+                        s = "<-";
+                    } else if (cells[i][j].arrowDir == NORTHWEST) {
+                        s = "^<-";
+                    } else {
+                        s = "/";
+                    }
+                    System.out.format("%5s", s);
+                    s = "";
+                }
+            }
+            System.out.println();
+        }
     }
 }
