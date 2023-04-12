@@ -130,6 +130,7 @@ public class Main {
                         }
                         grid.findAlignment();
                         grid.printAlignment();
+                        System.out.println();
                         System.out.println("Max score: " + grid.getMaxScore());
                         System.out.println();
                     }
@@ -205,7 +206,7 @@ public class Main {
                         String firstInput = read.readLine();
                         String current = "";
                         //read into first sequence until second sequence reached
-                        while(!current.contains(">") || current != null){
+                        while(!current.contains(">")){
                             firstInput = firstInput + current;
                             current = read.readLine();
                         }
@@ -242,6 +243,7 @@ public class Main {
 
                         seq1 = "";
                         seq2 = "";
+
 
                     }
                 }
