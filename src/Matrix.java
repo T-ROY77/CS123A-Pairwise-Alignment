@@ -56,7 +56,8 @@ public class Matrix {
         for (String variableName : matrixMap.keySet()) {
             String variableKey = variableName;
             Integer variableValue = matrixMap.get(variableName);
-            System.out.println(" " + variableKey + " = " + variableValue);
+            System.out.print(" " + variableKey + " = " + variableValue);
+            System.out.print(", ");
         }
     }
 

@@ -308,6 +308,14 @@ public class Grid {
         sequence2Name = name2;
     }
 
+    //@method resetNames
+    //
+    //resets the names of the sequences
+    public void resetNames(){
+        sequence1Name = "";
+        sequence2Name = "";
+    }
+
     //@method setSequences
     //@param seq1
     //@param seq2

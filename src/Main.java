@@ -82,6 +82,7 @@ public class Main {
                 System.out.println("6: Change mode (Nucleotide mode)");
             }
             System.out.println("7: Create a new Matrix");
+            System.out.println("8: Print all Matrices");
             System.out.println("9: quit");
 
             String choice = input.nextLine();
@@ -164,14 +165,19 @@ public class Main {
                     //resets sequences
                     seq1 = "";
                     seq2 = "";
+                    grid.resetNames();
                     System.out.print("mode changed");
                 }
 
                 //manual sequence input
                 else if (inputNumber == 1) {
                     //take UI
+                    System.out.print("Enter the first sequence name: ");
+                    String firstName = input.nextLine();
                     System.out.print("Enter the first sequence: ");
                     String firstInput = input.nextLine();
+                    System.out.print("Enter the second sequence name: ");
+                    String secondName = input.nextLine();
                     System.out.print("Enter the second sequence: ");
                     String secondInput = input.nextLine();
 
@@ -183,7 +189,7 @@ public class Main {
                     if(Main.checkSeq(firstInput, secondInput)) {
                         //create the new grid
                         grid.setSequences(firstInput, secondInput);
-
+                        grid.setNames(firstName, secondName);
                         seq1 = firstInput;
                         seq2 = secondInput;
                         System.out.println();
@@ -201,8 +207,7 @@ public class Main {
                     try(BufferedReader read = new BufferedReader(new FileReader(filepath))){
                         //read input from file
                         //
-                        String seq1Name = read.readLine();
-
+                        String firstName = read.readLine();
                         String firstInput = read.readLine();
                         String current = "";
                         //read into first sequence until second sequence reached
@@ -210,7 +215,7 @@ public class Main {
                             firstInput = firstInput + current;
                             current = read.readLine();
                         }
-                        String seq2Name = current;
+                        String secondName = current;
                         String secondInput = read.readLine();
                         current = "";
                         //read into second sequence until end of file reached
@@ -226,6 +231,7 @@ public class Main {
                         if(Main.checkSeq(firstInput, secondInput)) {
                             //create the new grid
                             grid.setSequences(firstInput, secondInput);
+                            grid.setNames(firstName, secondName);
 
                             seq1 = firstInput;
                             seq2 = secondInput;
@@ -243,8 +249,7 @@ public class Main {
 
                         seq1 = "";
                         seq2 = "";
-
-
+                        grid.resetNames();
                     }
                 }
 
@@ -296,7 +301,10 @@ public class Main {
                     else{
                         System.out.println("Matrix not created");
                     }
-                    //grid.printMatrices();
+                }
+                //print matrices
+                else if(inputNumber == 8){
+                    grid.printMatrices();
                 }
                 //quit
                 else if(inputNumber == 9){
@@ -306,11 +314,11 @@ public class Main {
                 }
                 //user input error
                 else {
-                    System.out.println("\n");
+                    System.out.println();
                     System.out.println("Invalid input.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("\n");
+                System.out.println();
                 System.out.println("Invalid input. Please enter a number.");
             }
         }
