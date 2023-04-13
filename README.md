@@ -1,16 +1,16 @@
 Pairwise Alignment Tool
 
-This is a pairwise alignment tool used to generate an optimal alignment for nucleotide and protein sequences. 
-The tool supports 2 different modes:
-Nucleotide mode will calculate an optimal alignment using nucleotide match/mismatch scoring. 
-For a nucleotide match, the score is +1. For a nucleotide mismatch, the score is -1.
+This is a pairwise alignment tool used to generate an optimal alignment for nucleotide and protein sequences.   
+The tool supports 2 different modes:  
+Nucleotide mode will calculate an optimal alignment using nucleotide match/mismatch scoring.   
+For a nucleotide match, the score is +1. For a nucleotide mismatch, the score is -1.  
 
-Protein mode will calculate an optimal alignment based on a scoring matrix loaded into the tool.
+Protein mode will calculate an optimal alignment based on a scoring matrix loaded into the tool.  
 
-To start the tool, run main and follow the prompts printed in the console.
+To start the tool, run main and follow the prompts printed in the console.  
 
-The tool will first print the sequences currently loaded. If no sequences are loaded, they will prompt the user to enter sequences
-The tool will prompt user with multiple options:
+The tool will first print the sequences currently loaded. If no sequences are loaded, they will prompt the user to enter sequences.  
+The tool will prompt user with multiple options:  
 
 1. Enter new query sequences  
 -The tool will ask for a name for the first sequence. Pressing enter with nothing typed will set the name to "Sequence 1:"  
