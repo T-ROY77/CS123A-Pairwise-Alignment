@@ -61,10 +61,10 @@ public class Main {
             }
             //sequences have a name
             else{
-                System.out.println(" " + grid.sequence1Name);
+                System.out.println(">" + grid.sequence1Name);
                 System.out.println(seq1);
 
-                System.out.println(" " + grid.sequence2Name);
+                System.out.println(">" + grid.sequence2Name);
                 System.out.println(seq2);
             }
 
