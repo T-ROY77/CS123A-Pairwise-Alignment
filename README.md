@@ -61,7 +61,7 @@ The tool will prompt user with multiple options:
 
 7. Create a new matrix
 -The tool supports adding new matrices during runtime
--The input is based on ...
+-The input is based on the ncbi standard matrix format: https://www.ncbi.nlm.nih.gov/IEB/ToolBox/C_DOC/lxr/source/data/BLOSUM62 
 -The tool will prompt user for matrix name
 -The tool will then prompt user for amino acid order
  -The amino acid input can be one string of lowercase or uppercase letters
