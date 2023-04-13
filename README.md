@@ -12,12 +12,12 @@ To start the tool, run main and follow the prompts printed in the console.
 The tool will first print the sequences currently loaded. If no sequences are loaded, they will prompt the user to enter sequences
 The tool will prompt user with multiple options:
 
-1. Enter new query sequences
--The tool will ask for a name for the first sequence. Pressing enter with nothing typed will set the name to "Sequence 1:"
--The tool will ask for the first sequence. The sequence may only include alphabet letters excluding o, u, and j, as there are not amino acids associated with them 
--The tool will ask for a name for the second sequence. Pressing enter with nothing typed will set the name to "Sequence 2:"
--The tool will ask for the second sequence
--If both sequences are valid, they will show in the sequences field.
+1. Enter new query sequences  
+-The tool will ask for a name for the first sequence. Pressing enter with nothing typed will set the name to "Sequence 1:"  
+-The tool will ask for the first sequence. The sequence may only include alphabet letters excluding o, u, and j, as there are not amino acids associated with them   
+-The tool will ask for a name for the second sequence. Pressing enter with nothing typed will set the name to "Sequence 2:"  
+-The tool will ask for the second sequence  
+-If both sequences are valid, they will show in the sequences field  
 
 2. Enter new query sequences with filepath
 -The tool supports filepath input for query sequences
