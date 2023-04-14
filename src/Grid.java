@@ -9,6 +9,8 @@ import java.util.Collections;
 //represents the grid used in the Needleman Wunsch algorithm to calculate pairwise alignment
 //uses a 2d array of Cells to represent grid
 //
+//reset grid
+//**********************************************
 
 
 public class Grid {
