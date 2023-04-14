@@ -37,16 +37,16 @@ The tool will prompt user with multiple options:
 4. Print grid  
 -The tool will print the Needleman Wunsch grid calculated   
 -If no sequences are loaded, the grid will not be printed  
--If sequences have been loaded, but the alignment has not been calculated, the grid will not be printed  
--In the grid, "/" represents an empty grid  
+-If sequences have been loaded, but the alignment has not been calculated, default values will be printed  
+-In the grid, "/" represents an empty cell  
 -Sequence one is loaded on the horizontal axis  
 -Sequence two is loaded on the vertical axis  
 
 5. Print arrow grid  
 -The tool will print the Needleman Wunsch grid arrow directions   
 -If no sequences are loaded, the grid will not be printed  
--If sequences have been loaded, but the alignment has not been calculated, the grid will not be printed  
--In the grid, "/" represents an empty grid  
+-If sequences have been loaded, but the alignment has not been calculated, default values will be printed
+-In the grid, "/" represents an empty cell  
 -In the grid, "^" represents a north arrow  
 -In the grid, "<-" represents a west arrow  
 -In the grid, "^<-" represents a north west arrow  
