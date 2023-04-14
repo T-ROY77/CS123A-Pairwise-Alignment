@@ -5,7 +5,7 @@ The tool supports 2 different modes:
 Nucleotide mode will calculate an optimal alignment using nucleotide match/mismatch scoring.   
 For a nucleotide match, the score is +1. For a nucleotide mismatch, the score is -1.  
 
-Protein mode will calculate an optimal alignment based on a scoring matrix loaded into the tool.  
+Protein mode will calculate an optimal alignment based on a scoring matrix loaded into the tool and selected by the user  
 
 To start the tool, run main and follow the prompts printed in the console.  
 
