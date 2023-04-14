@@ -230,7 +230,6 @@ public class Grid {
                         //get the chars to compare
                         String s = "" + cells[0][j].character + cells[i][0].character;
                         //calculate north west score
-                        nw = cells[i - 1][j - 1].score + getMatchScore(s);
                         int nwScore = getMatchScore(s);
                         //error check for matrix calculation
                         if(nwScore > Integer.MIN_VALUE){
