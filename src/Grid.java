@@ -240,6 +240,7 @@ public class Grid {
                         else{
                             nw = Integer.MIN_VALUE;
                             resetGrid();
+                            maxScore = nw;
                             return;
                             //i = gridHeight-1;
                             //j = gridLength-1;
