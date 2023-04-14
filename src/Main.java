@@ -36,6 +36,7 @@ public class Main {
         input = new Scanner(System.in);
         proteinMode = false;
         System.out.println();
+
         System.out.println("Pairwise Alignment Tool");
 
         //ui loop
