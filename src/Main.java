@@ -65,10 +65,10 @@ public class Main {
             }
             //sequences have a name
             else{
-                System.out.println(">" + grid.sequence1Name);
+                System.out.println("" + grid.sequence1Name);
                 System.out.println(seq1);
 
-                System.out.println(">" + grid.sequence2Name);
+                System.out.println("" + grid.sequence2Name);
                 System.out.println(seq2);
             }
 
@@ -136,8 +136,11 @@ public class Main {
                         grid.findAlignment();
                         grid.printAlignment();
                         System.out.println();
-                        System.out.println("Max score: " + grid.getMaxScore());
-                        System.out.println();
+                        int score = grid.getMaxScore();
+                        if(score > Integer.MIN_VALUE){
+                            System.out.println("Max score: " + score);
+                            System.out.println();
+                        }
                     }
                 }
 

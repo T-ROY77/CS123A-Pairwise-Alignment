@@ -149,6 +149,9 @@ public class Grid {
     //
     //resets the grid to the default values
     public void resetGrid(){
+
+        alignedSequence1 = null;
+        alignedSequence2 = null;
         //calculate grid dimensions
         gridLength = PADDING;
         gridHeight = PADDING;
@@ -228,7 +231,21 @@ public class Grid {
                         //get the chars to compare
                         String s = "" + cells[0][j].character + cells[i][0].character;
                         //calculate north west score
-                        nw = cells[i - 1][j - 1].score + getMatchScore(s);
+                        int nwScore = getMatchScore(s);
+                        //error check for matrix calculation
+                        if(nwScore > Integer.MIN_VALUE){
+                            nw = cells[i - 1][j - 1].score + nwScore;
+                        }
+                        //key match not found in matrix
+                        //resets grid and breaks from the loop
+                        else{
+                            nw = Integer.MIN_VALUE;
+                            resetGrid();
+                            return;
+                            //i = gridHeight-1;
+                            //j = gridLength-1;
+                        }
+
 
                         //get max score from all three values
                         highest = Math.max(north, west);
@@ -260,7 +277,7 @@ public class Grid {
     //assumes calcGrid has finished
     public void calcAlignment() throws Exception {
         //error check
-        if(cells == null){
+        if(cells[gridHeight-1][gridLength-1].arrowDir == -1){
             System.out.println("Grid has not been set up");
         }
         else {
@@ -338,12 +355,10 @@ public class Grid {
     //
     //returns the max alignment score
     public int getMaxScore() throws Exception {
-        if(maxScore > Integer.MIN_VALUE) {
-            return maxScore;
+        if(maxScore == Integer.MIN_VALUE) {
+            System.out.println("Grid has not been calculated yet");
         }
-        else{
-            throw new Exception("Grid has not been calculated yet");
-        }
+        return maxScore;
     }
 
     //@method getLongestDim
