@@ -8,7 +8,7 @@ import java.util.Collections;
 //
 //represents the grid used in the Needleman Wunsch algorithm to calculate pairwise alignment
 //uses a 2d array of Cells to represent grid
-//
+//used to calculate nucleotide alignments
 
 
 public class Grid {
@@ -33,7 +33,6 @@ public class Grid {
     public int INDELPENALTY = 2;
     //padding for sequence and initial score cells
     public final int PADDING = 2;
-
     //arrow direction values
     public final int NORTH = 0;
     public final int NORTHWEST = 1;
@@ -71,6 +70,7 @@ public class Grid {
 
     //@method setUpGrid
     //
+    //initializes grid and cells within grid
     //adds the query sequences to the grid
     //calculates the initial scores
     public void setUpGrid() throws Exception {
