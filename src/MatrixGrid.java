@@ -108,7 +108,9 @@ public class MatrixGrid extends Grid{
         if(!matrices.get(currentMatrix).matrixMap.containsKey(match)){
             match = "" + match.charAt(1) + match.charAt(0);
             if(!matrices.get(currentMatrix).matrixMap.containsKey(match)){
-                throw new Exception("Key not found in Matrix");
+                System.out.println("Key not found in Matrix");
+                return Integer.MIN_VALUE;
+                //throw new Exception("Key not found in Matrix");
             }
         }
         return matrices.get(currentMatrix).matrixMap.get(match);
