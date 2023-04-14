@@ -60,6 +60,7 @@ public class Matrix {
             System.out.print(", ");
         }
         System.out.println();
+        System.out.println();
     }
 
 
