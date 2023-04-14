@@ -9,8 +9,7 @@ import java.util.Collections;
 //represents the grid used in the Needleman Wunsch algorithm to calculate pairwise alignment
 //uses a 2d array of Cells to represent grid
 //
-//reset grid
-//**********************************************
+
 
 
 public class Grid {
@@ -145,6 +144,61 @@ public class Grid {
         cells[1][1].isSet = true;
         cells[1][1].character = ' ';
     }
+
+    //@method resetGrid
+    //
+    //resets the grid to the default values
+    public void resetGrid(){
+        //calculate grid dimensions
+        gridLength = PADDING;
+        gridHeight = PADDING;
+
+
+        //initialize grid array
+        cells = new Cell[gridHeight][gridLength];
+
+        //initialize cells inside grid
+        for (int i = 0; i < gridHeight; i++) {
+            for (int j = 0; j < gridLength; j++)
+                cells[i][j] = new Cell();
+        }
+
+        //set the top three empty cells
+        cells[0][0].isSet = true;
+        cells[0][0].character = '/';
+        cells[0][0].arrowDir = -1;
+
+        cells[1][0].isSet = true;
+        cells[1][0].character = '/';
+        cells[1][0].arrowDir = -1;
+
+        cells[0][1].isSet = true;
+        cells[0][1].character = '/';
+        cells[0][1].arrowDir = -1;
+
+        //initial score cells
+        //
+        //row values
+        for(int i = 0; i < gridLength-1; i++){
+            cells[1][1 + i].score = -2 * i;
+            cells[1][1 + i].arrowDir = WEST;
+            cells[1][1 + i].isSet = true;
+        }
+        //column values
+        for(int i = 0; i < gridHeight-1; i++){
+            cells[1+i][1].score = -2 * i;
+            cells[1+i][1].arrowDir = NORTH;
+            cells[1+i][1].isSet = true;
+        }
+
+        //stop condition
+        //"0" cell
+        cells[1][1].arrowDir = -1;
+        cells[1][1].score = 0;
+        cells[1][1].isSet = true;
+        cells[1][1].character = ' ';
+    }
+
 
     //@method calcGrid
     //
