@@ -35,6 +35,7 @@ public class Main {
         grid = new MatrixGrid();
         input = new Scanner(System.in);
         proteinMode = false;
+        System.out.println();
         System.out.println("Pairwise Alignment Tool");
 
         //ui loop
@@ -42,6 +43,9 @@ public class Main {
 
             //print sequences
             System.out.println();
+            System.out.println();
+            System.out.println();
+
             //sequences are empty
             if(seq1.equals("") || seq2.equals("")){
                 System.out.println("Sequence 1:");
@@ -61,10 +65,10 @@ public class Main {
             }
             //sequences have a name
             else{
-                System.out.println(">" + grid.sequence1Name);
+                System.out.println("" + grid.sequence1Name);
                 System.out.println(seq1);
 
-                System.out.println(">" + grid.sequence2Name);
+                System.out.println("" + grid.sequence2Name);
                 System.out.println(seq2);
             }
 
@@ -132,8 +136,11 @@ public class Main {
                         grid.findAlignment();
                         grid.printAlignment();
                         System.out.println();
-                        System.out.println("Max score: " + grid.getMaxScore());
-                        System.out.println();
+                        int score = grid.getMaxScore();
+                        if(score > Integer.MIN_VALUE){
+                            System.out.println("Max score: " + score);
+                            System.out.println();
+                        }
                     }
                 }
 
@@ -166,6 +173,7 @@ public class Main {
                     seq1 = "";
                     seq2 = "";
                     grid.resetNames();
+                    grid.resetGrid();
                     System.out.print("mode changed");
                 }
 
@@ -188,6 +196,7 @@ public class Main {
                     //check that sequence is valid
                     if(Main.checkSeq(firstInput, secondInput)) {
                         //create the new grid
+                        grid.resetGrid();
                         grid.setSequences(firstInput, secondInput);
                         grid.setNames(firstName, secondName);
                         seq1 = firstInput;
@@ -230,9 +239,9 @@ public class Main {
                         //check that sequence is valid
                         if(Main.checkSeq(firstInput, secondInput)) {
                             //create the new grid
+                            grid.resetGrid();
                             grid.setSequences(firstInput, secondInput);
                             grid.setNames(firstName, secondName);
-
                             seq1 = firstInput;
                             seq2 = secondInput;
                             System.out.println();
@@ -250,6 +259,7 @@ public class Main {
                         seq1 = "";
                         seq2 = "";
                         grid.resetNames();
+                        grid.resetGrid();
                     }
                 }
 

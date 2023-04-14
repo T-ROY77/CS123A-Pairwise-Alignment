@@ -11,6 +11,7 @@ import java.util.Collections;
 //
 
 
+
 public class Grid {
 
     //class variables
@@ -144,6 +145,64 @@ public class Grid {
         cells[1][1].character = ' ';
     }
 
+    //@method resetGrid
+    //
+    //resets the grid to the default values
+    public void resetGrid(){
+
+        alignedSequence1 = null;
+        alignedSequence2 = null;
+        //calculate grid dimensions
+        gridLength = PADDING;
+        gridHeight = PADDING;
+
+
+        //initialize grid array
+        cells = new Cell[gridHeight][gridLength];
+
+        //initialize cells inside grid
+        for (int i = 0; i < gridHeight; i++) {
+            for (int j = 0; j < gridLength; j++)
+                cells[i][j] = new Cell();
+        }
+
+        //set the top three empty cells
+        cells[0][0].isSet = true;
+        cells[0][0].character = '/';
+        cells[0][0].arrowDir = -1;
+
+        cells[1][0].isSet = true;
+        cells[1][0].character = '/';
+        cells[1][0].arrowDir = -1;
+
+        cells[0][1].isSet = true;
+        cells[0][1].character = '/';
+        cells[0][1].arrowDir = -1;
+
+        //initial score cells
+        //
+        //row values
+        for(int i = 0; i < gridLength-1; i++){
+            cells[1][1 + i].score = -2 * i;
+            cells[1][1 + i].arrowDir = WEST;
+            cells[1][1 + i].isSet = true;
+        }
+        //column values
+        for(int i = 0; i < gridHeight-1; i++){
+            cells[1+i][1].score = -2 * i;
+            cells[1+i][1].arrowDir = NORTH;
+            cells[1+i][1].isSet = true;
+        }
+
+        //stop condition
+        //"0" cell
+        cells[1][1].arrowDir = -1;
+        cells[1][1].score = 0;
+        cells[1][1].isSet = true;
+        cells[1][1].character = ' ';
+    }
+
+
     //@method calcGrid
     //
     //calculates the grid and sets values of all cells
@@ -172,7 +231,21 @@ public class Grid {
                         //get the chars to compare
                         String s = "" + cells[0][j].character + cells[i][0].character;
                         //calculate north west score
-                        nw = cells[i - 1][j - 1].score + getMatchScore(s);
+                        int nwScore = getMatchScore(s);
+                        //error check for matrix calculation
+                        if(nwScore > Integer.MIN_VALUE){
+                            nw = cells[i - 1][j - 1].score + nwScore;
+                        }
+                        //key match not found in matrix
+                        //resets grid and breaks from the loop
+                        else{
+                            nw = Integer.MIN_VALUE;
+                            resetGrid();
+                            return;
+                            //i = gridHeight-1;
+                            //j = gridLength-1;
+                        }
+
 
                         //get max score from all three values
                         highest = Math.max(north, west);
@@ -204,7 +277,7 @@ public class Grid {
     //assumes calcGrid has finished
     public void calcAlignment() throws Exception {
         //error check
-        if(cells == null){
+        if(cells[gridHeight-1][gridLength-1].arrowDir == -1){
             System.out.println("Grid has not been set up");
         }
         else {
@@ -282,12 +355,10 @@ public class Grid {
     //
     //returns the max alignment score
     public int getMaxScore() throws Exception {
-        if(maxScore > Integer.MIN_VALUE) {
-            return maxScore;
+        if(maxScore == Integer.MIN_VALUE) {
+            System.out.println("Grid has not been calculated yet");
         }
-        else{
-            throw new Exception("Grid has not been calculated yet");
-        }
+        return maxScore;
     }
 
     //@method getLongestDim
